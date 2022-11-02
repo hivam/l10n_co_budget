@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_presupuesto_ejecucion_gastos" model="ir.ui.view">
+            <field name="name">Ejecucion de Gastos</field>
+            <field name="model">presupuesto.ejecucion.gastos</field>
+            <field name="arch" type="xml">
+                <form string="Ejecucion de Gastos">
+                    <group>
+                        <field name="fiscalyear_id" domain="[('state','=','draft')]"/>
+                        <field name="chart_rubros_id" widget='selection'/>
+                    </group>
+                    <group string="Periodos"  col="4">
+                         <field name="period_from"  domain="[('fiscalyear_id', '=', fiscalyear_id), ('special', '=', False)]"/>
+                         <field name="period_to" domain="[('fiscalyear_id', '=', fiscalyear_id), ('special', '=', False)]" />
+                         <field name="period_ant" invisible="1"/>
+                     </group>
+                     <group>
+                        <field name="excel_file_name" invisible="1"/>
+                        <field name="excel_file" filename="excel_file_name"/>
+                    </group>
+                    <footer>
+                        <button string="Imprimir" name="create_presupuesto_ejecucion_gas" type="object" class="oe_highlight"/>                        
+                        <button string="Generar en Excel" name="create_presupuesto_ejecucion_gas_excel" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_presupuesto_ejecucion_gastos" model="ir.actions.act_window">
+            <field name="name">Ejecución de Gastos</field>
+            <field name="res_model">presupuesto.ejecucion.gastos</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_presupuesto_ejecucion_gastos"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem icon="STOCK_INDENT" action="action_presupuesto_ejecucion_gastos" id="menu_action_presupuesto_ejecucion_gastos" parent="menu_view_presupuesto_gasto_form" sequence="50" groups="l10n_co_budget.group_budget_user,l10n_co_budget.group_budget_treasurer"/>
+
+    </data>
+</odoo>

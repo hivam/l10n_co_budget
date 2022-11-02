@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data noupdate="1">
+		<record id="group_budget_cdp_void" model="res.groups">
+	        <field name="name">Supervisor CDP presupuestal</field>
+	        <field name="category_id" ref="base.module_category_budget"/>
+	    </record>
+		
+		<record id="group_budget_comp_void" model="res.groups">
+<!-- 	        <field name="name">Supervisor compromiso presupuestal</field> -->
+	       	<field name="name">Supervisor registro presupuestal</field>
+	        <field name="category_id" ref="base.module_category_budget"/>
+	    </record>
+	    
+	    <record id="group_budget_obl_void" model="res.groups">
+<!-- 	        <field name="name">Supervisor obligacion presupuestal</field> -->
+	       	<field name="name">Supervisor ordenes de pago</field>
+	        <field name="category_id" ref="base.module_category_budget"/>
+	    </record>
+		
+		<record id="group_budget_pago_void" model="res.groups">
+	        <field name="name">Supervisor pago presupuestal</field>
+	        <field name="category_id" ref="base.module_category_budget"/>
+	    </record>
+	
+	    <record id="group_budget_user" model="res.groups">
+	        <field name="name">Usuario presupuesto</field>
+	        <field name="category_id" ref="base.module_category_budget"/>
+	    </record>
+
+	    <record id="group_budget_treasurer" model="res.groups">
+	        <field name="name">Tesorero</field>
+	        <field name="category_id" ref="base.module_category_budget"/>
+	    </record>
+
+	    <record id="group_budget_record_payments_supplier" model="res.groups">
+	        <field name="name">Registrar pagos proveedores</field>
+	        <field name="category_id" ref="base.module_category_budget"/>
+	    </record>
+
+	    <record id="group_budget_record_payments_customer" model="res.groups">
+	        <field name="name">Registrar pagos clientes</field>
+	        <field name="category_id" ref="base.module_category_budget"/>
+	    </record>
+
+
+	    <record id="group_budget_cdp_confirm" model="res.groups">
+	        <field name="name">Supervisor Confirmar CDP</field>
+	        <field name="category_id" ref="base.module_category_budget"/>
+	    </record>   
+
+	</data>
+</openerp>

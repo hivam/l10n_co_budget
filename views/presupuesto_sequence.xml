@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<openerp>
+  <data noupdate="1">
+
+    <!-- Sequence type for inicial -->
+    <!--<record model="ir.sequence.type" id="seq_type_inicial">
+      <field name="name">Presupuesto inicial</field>
+      <field name="code">inicial.sequence</field>
+    </record>-->
+
+    <!--Sequence for inicial -->
+    <record model="ir.sequence" id="seq_inicial">
+      <field name="name">Presupuesto N°</field>
+      <field name="code">inicial.sequence</field>
+      <field name="padding" eval="4"/>
+      <field name="prefix">PRES-%(y)s-</field>
+    </record>
+
+    <!-- Sequence type for modificación -->
+    <!--<record model="ir.sequence.type" id="seq_type_modificacion">
+      <field name="name">Modificación</field>
+      <field name="code">modificacion.sequence</field>
+    </record>-->
+
+    <!--Sequence for modificación -->
+    <record model="ir.sequence" id="seq_modificacion">
+      <field name="name">N° de modificación</field>
+      <field name="code">modificacion.sequence</field>
+      <field name="padding" eval="4"/>
+      <field name="prefix">MOD-%(y)s-</field>
+    </record>
+
+    <!-- Sequence type for recaudo -->
+    <!--<record model="ir.sequence.type" id="seq_type_recaudo">
+      <field name="name">Recaudo</field>
+      <field name="code">recaudo.sequence</field>
+    </record>-->
+
+    <!--Sequence for recaudo -->
+    <record model="ir.sequence" id="seq_recaudo">
+      <field name="name">N° de recaudo</field>
+      <field name="code">recaudo.sequence</field>
+      <field name="padding" eval="4"/>
+      <field name="prefix">RC-%(y)s-</field>
+    </record>
+
+    <!-- Sequence type for cdp -->
+    <!--<record model="ir.sequence.type" id="seq_type_cdp">
+      <field name="name">CDP</field>
+      <field name="code">cdp.sequence</field>
+    </record>-->
+
+    <!--Sequence for cdp -->
+    <record model="ir.sequence" id="seq_cdp">
+      <field name="name">N° de CDP</field>
+      <field name="code">cdp.sequence</field>
+      <field name="padding" eval="4"/>
+      <field name="prefix">CDP-%(y)s-</field>
+    </record>
+
+    <!-- Sequence type for registro presupuestal -->
+    <!--<record model="ir.sequence.type" id="seq_type_compromiso">
+      <field name="name">compromiso</field>
+      <field name="code">compromiso.sequence</field>
+    </record>-->
+
+    <!--Sequence for registro presupuestal -->
+    <record model="ir.sequence" id="seq_compromiso">
+      <field name="name">N° de Registro presupuestal</field>
+      <field name="code">compromiso.sequence</field>
+      <field name="padding" eval="4"/>
+      <field name="prefix">RP-%(y)s-</field>
+    </record>
+
+    <!-- Sequence type for obligación presupuestal -->
+    <!--<record model="ir.sequence.type" id="seq_type_obligacion">
+      <field name="name">obligacion</field>
+      <field name="code">obligacion.sequence</field>
+    </record>-->
+
+    <!--Sequence for obligación presupuestal -->
+    <record model="ir.sequence" id="seq_obligacion">
+      <field name="name">N° de Obligación</field>
+      <field name="code">obligacion.sequence</field>
+      <field name="padding" eval="4"/>
+      <field name="prefix">OB-%(y)s-</field>
+    </record>
+
+    <!-- Sequence type for pago presupuestal -->
+    <!--<record model="ir.sequence.type" id="seq_type_pago">
+      <field name="name">pago</field>
+      <field name="code">pago.sequence</field>
+    </record>-->
+
+    <!--Sequence for pago presupuestal -->
+    <record model="ir.sequence" id="seq_pago">
+      <field name="name">N° de Orden de pago</field>
+      <field name="code">pago.sequence</field>
+      <field name="padding" eval="4"/>
+      <field name="prefix">OP-%(y)s-</field>
+    </record>
+
+    <!--Sequence for modificacion CDP y RP -->
+<!--     <record model="ir.sequence" id="seq_modificion_cdp_rp">
+      <field name="name">N° de modificacion CDP y RP</field>
+      <field name="code">modificaciones_cdp_rp.sequence</field>
+      <field name="padding" eval="4"/>
+      <field name="prefix">VAR-%(y)s-</field>
+    </record> -->
+
+    <!--Sequence for modificacion CDP -->
+    <record model="ir.sequence" id="seq_modificion_cdp">
+      <field name="name">N° de modificacion CDP</field>
+      <field name="code">modificaciones_cdp.sequence</field>
+      <field name="padding" eval="4"/>
+      <field name="prefix">MOD_CDP-%(y)s-</field>
+    </record>
+
+    <!--Sequence for modificacion RP -->
+    <record model="ir.sequence" id="seq_modificion_rp">
+      <field name="name">N° de modificacion RP</field>
+      <field name="code">modificaciones_reg.sequence</field>
+      <field name="padding" eval="4"/>
+      <field name="prefix">MOD_RP-%(y)s-</field>
+    </record>
+
+  </data>
+</openerp>

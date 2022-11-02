@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_rp_con_saldo_pendiente" model="ir.ui.view">
+            <field name="name">Registro presupuestal con saldo pendiente</field>
+            <field name="model">presupuesto.rp.saldo</field>
+            <field name="arch" type="xml">
+                <form string="Registro presupuestal con saldo pendiente">
+                    <group>
+                        <field name="fiscalyear_id" domain="[('state','=','draft')]"/>
+                    </group>
+                    <group string="Periodos"  col="4">
+                         <field name="period_from"  domain="[('fiscalyear_id', '=', fiscalyear_id), ('special', '=', False)]"/>
+                         <field name="period_to" domain="[('fiscalyear_id', '=', fiscalyear_id), ('special', '=', False)]" />
+                         <field name="period_ant" invisible="1"/>
+                     </group>
+                    <footer>
+                        <button string="Imprimir" name="create_report_rp_saldo" type="object" class="oe_highlight"/>     
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_rp_con_saldo_pendiente" model="ir.actions.act_window">
+            <field name="name">RP con saldo</field>
+            <field name="res_model">presupuesto.rp.saldo</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_rp_con_saldo_pendiente"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem action="action_rp_con_saldo_pendiente" id="menu_action_rp_con_saldo_pendiente" parent="menu_view_presupuesto_gasto_form" sequence="60" groups="l10n_co_budget.group_budget_user,l10n_co_budget.group_budget_treasurer"/>
+
+    </data>
+</odoo>

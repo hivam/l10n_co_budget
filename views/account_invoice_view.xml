@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="account_invoice_form">
+            <field name="name">account_invoice_form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="type">form</field>
+            <field name="priority" eval="7"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[2]" position="replace">
+                    <button name="%(account.action_account_invoice_payment)d" type="action" states="open" string="Registrar Pago" groups="l10n_co_budget.group_budget_record_payments_supplier" class="oe_highlight"/>
+                </xpath>
+                <notebook>
+                    <page string="Presupuesto">
+                      <group>
+                        <group>
+                        <field name="rp"/>
+                        <field name="obl" domain="[('move_rel', '=', rp)]"
+                          attrs="{'invisible': [('rp','=', False)]}"/>
+                        </group>
+                        <group>
+                          <button name="generate_obl" type="object" string="Crear OBL" class="oe_highlight"
+                            attrs="{'invisible': ['|', ('rp','=', False), ('obl','!=', False)]}"/>
+                        </group>
+                      </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="account_invoice_form_customer">
+            <field name="name">account_invoice_form_customer</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="type">form</field>
+            <field name="priority" eval="9"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[5]" position="replace">
+                    <button name="%(account.action_account_invoice_payment)d" type="action" states="open" string="Registrar Pago" groups="l10n_co_budget.group_budget_record_payments_customer" class="oe_highlight"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

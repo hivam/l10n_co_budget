@@ -1,0 +1,1353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+      <!-- Definir listado codigo presupuestal-->
+
+              <record model="ir.ui.view" id="view_presupuesto_tree">
+                  <field name="name">co_presupuesto.tree</field>
+                  <field name="model">presupuesto</field>
+                  <field name="type">tree</field>
+                  <field name="arch" type="xml">
+                      <tree string = "Presupuesto" >
+                          <field name = "idcodigo"/>
+                          <field name = "name"/>
+                      </tree>
+                  </field>
+              </record>
+
+      <!-- Definir formulario codigo presupuestal-->
+              <record model="ir.ui.view" id="view_presupuesto_form">
+                  <field name="name">co_presupuesto.form</field>
+                  <field name="model">presupuesto</field>
+                  <field name="type">form</field>
+                  <field name="arch" type="xml">
+                      <form string = "Presupuesto">
+                          <group>
+                              <field name = "idcodigo"/>
+                              <field name = "name"/>
+                          </group>
+                      </form>
+                  </field>
+              </record>
+
+      <!-- Definimos la accion para que abra el formulario -->
+              <record model="ir.actions.act_window" id="action_presupuesto">
+                  <field name="name">Presupuesto</field>
+                  <field name="res_model">presupuesto</field>
+                  <field name="view_type">form</field>
+                  <field name="view_mode">tree,form</field>
+              </record>
+
+      <!-- Definimos la accion del menu -->
+              <menuitem name="Presupuesto" id="menu_presupuesto_form"  sequence="20"/>
+              <menuitem name="Presupuesto" parent="menu_presupuesto_form" id="menu_view_presupuesto_form"/>
+              <menuitem action="action_presupuesto" id="presupuesto_form" parent="menu_view_presupuesto_form" groups="l10n_co_budget.group_budget_user"/>
+ 
+      
+      <!-- Definir lista rubro presupuestal-->
+
+        <record model="ir.ui.view" id="view_presupuesto_rubro_tree">
+            <field name="name">Rubros</field>
+            <field name="model">presupuesto.rubros</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Rubros" >
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="rubro_nivel"/>
+                    <field name="rubro_tipo"/>
+                    <field name="parent_id" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Definir formulario rubro presupuestal-->
+        <record model="ir.ui.view" id="view_presupuesto_rubro_form">
+            <field name="name">Rubros</field>
+            <field name="model">presupuesto.rubros</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Rubros">
+                  <group>
+                    <group>
+                        <field name="code"/>
+                        <field name="name"/>
+                        <field name="parent_id"/>
+                        <field name="account_id" options="{'no_open' : True, 'no_create' : True, 'no_create_edit' : True}"/>
+                    </group>
+                    <group>
+                        <field name="rubro_nivel"/>
+                        <field name="rubro_tipo"/>
+                        <field name="active"/>
+                    </group>
+                  </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- Definimos la accion para que abra el formulario -->
+        <record model="ir.actions.act_window" id="action_presupuesto_rubro">
+            <field name="name">Rubros</field>
+            <field name="res_model">presupuesto.rubros</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- Definir lista conceptos recaudo presupuestal-->
+
+        <record model="ir.ui.view" id="view_presupuesto_conceptos_tree">
+            <field name="name">Conceptos Recaudo</field>
+            <field name="model">presupuesto.conceptos</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Conceptos Recaudo" >
+                    <field name="concepto"/>
+                    <field name="rubros_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Definir formulario rubro presupuestal-->
+        <record model="ir.ui.view" id="view_presupuesto_conceptos_form">
+            <field name="name">Conceptos Recaudo</field>
+            <field name="model">presupuesto.conceptos</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Conceptos Recaudo">
+                  <group>
+                        <field name="concepto"/>
+                        <field name="rubros_id"/>
+                  </group>
+                </form>
+            </field>
+        </record>
+
+        <!-- Definimos la accion para que abra el formulario -->
+        <record model="ir.actions.act_window" id="action_presupuesto_conceptos">
+            <field name="name">Conceptos Recaudo</field>
+            <field name="res_model">presupuesto.conceptos</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+
+        <!-- Definimos la accion del menu -->
+        <menuitem name="Ejecución de ingresos" parent="menu_presupuesto_form" id="menu_view_presupuesto_recaudo_form" sequence="10" groups="l10n_co_budget.group_budget_user"/>
+        <menuitem name="Ejecución de gastos" parent="menu_presupuesto_form" id="menu_view_presupuesto_gasto_form" sequence="20"/>
+        <menuitem name="Presupuesto" parent="menu_presupuesto_form" id="menu_view_presupuesto_year_form" sequence="30"/>
+        <menuitem name="Configuración" parent="menu_presupuesto_form" id="menu_view_presupuesto_form" sequence="40"/>
+
+        <menuitem action="action_presupuesto_rubro" id="menu_view_presupuesto_rubro_form" parent="menu_view_presupuesto_form" sequence="20" groups="l10n_co_budget.group_budget_user"/>
+        <menuitem action="action_presupuesto_conceptos" id="menu_view_presupuesto_conceptos_form" parent="menu_view_presupuesto_form" sequence="30" groups="l10n_co_budget.group_budget_user"/>
+
+        <!-- Presupuesto anual -->
+        <record id="view_presupuesto_year_move_form" model="ir.ui.view">
+            <field name="name">Presupuesto anual</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <form string="Presupuesto anual" version="7.0">
+                <header>
+                    <button name="button_cancel" states="confirm" string="Cambiar a borrador" type="object" groups="presupuesto.group_presupuesto"/>
+                    <button name="button_confirm" states="draft" string="Confirmar" type="object" class="oe_highlight"/>
+                    <button name="export_excel_budget" states="draft,confirm" string="Enviar a excel" type="object"/>
+                    <field name="state" widget="statusbar" nolabel="1" />
+                </header>
+                    <group>
+                        <group>
+                            <field name="doc_type" invisible="1"/>
+                            <field name="fiscal_year"/>
+                            <field name="period_id" invisible="1"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="name"/>
+                            <field name="date_start" required="1" invisible="1"/>
+                            <field name="date_stop" required="1" invisible="1"/>
+                            <field name="date" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <group>
+                        <field name="excel_file_name" invisible="1"/>
+                        <field name="excel_file" filename="excel_file_name"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Ingresos">
+                            <field name="ingresos_ids" nolabel='1' context="{'move_id' : id}"  >
+                              <tree string="Ingresos" editable="bottom">
+                                <field name="move_id" invisible="1" />
+                                <field name="rubros_id" domain="[('rubro_nivel', '=', 'D'), ('rubro_tipo', '=', 'I')]"/>
+                                <field name="mov_type"/>
+                                <field name="ammount"/>
+                                <field name="enero"/>
+                                <field name="febrero"/>
+                                <field name="marzo"/>
+                                <field name="abril"/>
+                                <field name="mayo"/>
+                                <field name="junio"/>
+                                <field name="julio"/>
+                                <field name="agosto"/>
+                                <field name="septiembre"/>
+                                <field name="octubre"/>
+                                <field name="noviembre"/>
+                                <field name="diciembre"/>
+                                <field name="notas"/>
+                              </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="amount_total_ingresos" string="Total"/>
+                            </group>
+                        </page>
+                        <page string="Gastos">
+                            <field name="gastos_ids" nolabel='1' context="{'move_id' : id}">
+                              <tree string="Gastos" editable="bottom">
+                                <field name="move_id" invisible="1" />
+                                <field name="rubros_id" domain="[('rubro_nivel', '=', 'D'), ('rubro_tipo', '=', 'G' )]"/>
+                                <field name="mov_type" />
+                                <field name="ammount"/>
+                                <field name="enero"/>
+                                <field name="febrero"/>
+                                <field name="marzo"/>
+                                <field name="abril"/>
+                                <field name="mayo"/>
+                                <field name="junio"/>
+                                <field name="julio"/>
+                                <field name="agosto"/>
+                                <field name="septiembre"/>
+                                <field name="octubre"/>
+                                <field name="noviembre"/>
+                                <field name="diciembre"/>
+                                <field name="notas"/>
+                              </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right">
+                                <field name="amount_total" string="Total"/>
+                            </group>
+                        </page>
+                    </notebook>
+<!--                     <button type="object" name="print_presupuesto_anual" string="Imprimir Presupuesto Anual"/>
+                    <hr /> -->
+                    <div>
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_presupuesto_year_move_tree" model="ir.ui.view">
+            <field name="name">Presupuesto anual</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state == 'draft';gray:state == 'done' " string="Presupuesto Year">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="fiscal_year"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_presupuesto_anual_search" model="ir.ui.view">
+            <field name="name">Presupuesto anual</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <search string="Recaudos">
+                    <field name="name"/>
+                    <field name="description"/> 
+                    <field name="fiscal_year"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <filter name="borrador" string="Borrador" domain="[('state', '=', 'draft')]"/>
+                    <filter name="confirmado" string="Confirmado" domain="[('state', '=', 'confirm')]"/>
+                    <filter name="rechazado" string="Rechazado" domain="[('state', '=', 'rejected')]"/>
+                    <filter name="anulado" string="Anulado" domain="[('state', '=', 'void')]"/>
+                    <separator/>
+                    <filter name="group_año_fiscal" string="Por año fiscal" context="{'group_by' : 'fiscal_year'}"/>
+                    <filter name="group_state" string="Por status" context="{'group_by' : 'state'}"/>
+                    <filter name="group_company_id" string="Por compañia" context="{'group_by' : 'company_id'}" groups="base.group_multi_company"/>             
+                </search>
+            </field>
+        </record>
+
+        <record id="action_presupuesto_year_move" model="ir.actions.act_window">
+            <field name="name">Presupuesto anual</field>
+            <field name="res_model">presupuesto.move</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,search</field>
+            <field name="domain">[('doc_type','=','ini')]</field>
+            <field name="context">{'default_doc_type':'ini', 'search_default_doc_type':'ini'}</field>
+            <field name="search_view_id" ref="view_presupuesto_anual_search"/>
+            <field name="filter" eval="True"/>
+        </record>
+
+        <record id="action_presupuesto_year_move_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_presupuesto_year_move_tree"/>
+            <field name="act_window_id" ref="action_presupuesto_year_move"/>
+        </record>
+
+        <record id="action_presupuesto_year_move_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_presupuesto_year_move_form"/>
+            <field name="act_window_id" ref="action_presupuesto_year_move"/>
+        </record>
+
+        <menuitem action="action_presupuesto_year_move" id="presupuesto_year_form_move" parent="menu_view_presupuesto_year_form" sequence="10" groups="l10n_co_budget.group_budget_user"/>
+
+        <!-- Modificaciones al Presupuesto anual -->
+        <record id="view_presupuesto_modifica_move_form" model="ir.ui.view">
+            <field name="name">Modificaciones</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <form string="Modificaciones" version="7.0">
+                <header>
+                    <button name="button_cancel" states="confirm" string="Cambiar a borrador" type="object" groups="presupuesto.group_presupuesto"/>
+                    <button name="button_confirm" states="draft" string="Confirmar" type="object" class="oe_highlight"/>
+                    <button name="button_rejected" states="draft" string="Rechazar" type="object" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" nolabel="1" />
+                </header>
+                    <group>
+                        <group>
+                          <field name="date" />
+                          <field name="period_id" invisible="1" />
+                          <field name="fiscal_year" invisible="1"/>
+                        </group>
+                        <group>
+                          <field name="name"/>
+                          <field name="doc_type" invisible="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Ingresos">
+                            <field name="ingresos_ids" nolabel='1'>
+                              <tree string="Ingresos" editable="bottom">
+                                <field name="move_state" invisible="1"/>
+                                <field name="rubros_id" domain="[('rubro_nivel', '=', 'D'), ('rubro_tipo', '=', 'I')]"/>
+                                <field name="mov_type"/>
+                                <field name="saldo_move" attrs="{'invisible': [('move_state', '!=', 'draft')]}"/>
+                                <field name="ammount"/>
+                                <field name="notas"/>
+                              </tree>
+                            </field>
+                        </page>
+                        <page string="Gastos">
+                            <field name="gastos_ids" nolabel='1'>
+                              <tree string="Gastos" editable="bottom">
+                                <field name="move_state" invisible="1"/>
+                                <field name="rubros_id" domain="[('rubro_nivel', '=', 'D'), ('rubro_tipo', '=', 'G' )]"/>
+                                <field name="mov_type"/>
+                                <field name="saldo_move" attrs="{'invisible': [('move_state', '!=', 'draft')]}"/>
+                                <field name="ammount"/>
+                                <field name="notas"/>
+                              </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <button type="object" name="print_modificacion_ingresos_gastos" string="Imprimir Modificación de Ingresos y Gastos"/>
+                    <hr />
+                    <div>
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_presupuesto_modifica_move_tree" model="ir.ui.view">
+            <field name="name">Modificaciones</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state == 'draft';gray:state == 'done' " string="Modificaciones al presupuesto">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="fiscal_year"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_modificaciones_search" model="ir.ui.view">
+            <field name="name">Modificaciones</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <search string="Recaudos">
+                    <field name="name"/>
+                    <field name="description"/> 
+                    <field name="fiscal_year"/>
+                    <filter name="borrador" string="Borrador" domain="[('state', '=', 'draft')]"/>
+                    <filter name="confirmado" string="Confirmado" domain="[('state', '=', 'confirm')]"/>
+                    <filter name="rechazado" string="Rechazado" domain="[('state', '=', 'rejected')]"/>
+                    <filter name="anulado" string="Anulado" domain="[('state', '=', 'void')]"/>
+                    <separator/>
+                    <filter name="group_año_fiscal" string="Por año fiscal" context="{'group_by' : 'fiscal_year'}"/>
+                    <filter name="group_state" string="Por status" context="{'group_by' : 'state'}"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_presupuesto_modifica_move" model="ir.actions.act_window">
+            <field name="name">Movimientos presupuestales</field>
+            <field name="res_model">presupuesto.move</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,search</field>
+            <field name="view_id" eval="view_presupuesto_modifica_move_tree"/>
+            <field name="domain">[('doc_type','=','mod')]</field>
+            <field name="context">{'default_doc_type':'mod', 'search_default_doc_type':'mod'}</field>
+            <field name="search_view_id" ref="view_modificaciones_search"/>
+            <field name="filter" eval="True"/>
+        </record>
+
+        <record id="action_presupuesto_modifica_move_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_presupuesto_modifica_move_tree"/>
+            <field name="act_window_id" ref="action_presupuesto_modifica_move"/>
+        </record>
+
+        <record id="action_presupuesto_modifica_move_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_presupuesto_modifica_move_form"/>
+            <field name="act_window_id" ref="action_presupuesto_modifica_move"/>
+        </record>
+
+        <menuitem action="action_presupuesto_modifica_move" id="presupuesto_modifica_move_form" parent="menu_view_presupuesto_year_form" sequence="20" groups="l10n_co_budget.group_budget_user"/>
+
+        <!-- Ejecución de ingresos -->
+        <record id="view_presupuesto_recaudo_move_form" model="ir.ui.view">
+            <field name="name">Recaudos</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <form string="Recaudos" version="7.0">
+                <header>
+                    <button name="button_cancel" states="confirm" string="Cambiar a borrador" type="object" groups="presupuesto.group_presupuesto"/>
+                    <button name="button_confirm" states="draft" string="Confirmar" type="object" class="oe_highlight"/>
+                    <button name="button_rejected" states="draft" string="Rechazar" type="object" class="oe_highlight"/>
+                    <field name="state" widget="statusbar" nolabel="1" />
+                </header>
+                    <group>
+                      <group>
+                        <field name="date" />
+                        <field name="period_id" invisible="1" />
+                        <field name="fiscal_year" invisible="1"/>
+                        <field name="partner_id" domain="[('customer', '=', True)]" required="1"/>
+                        <field name="voucher_id" domain="[('partner_id', '=', partner_id)]"/>
+                      </group>
+                      <group>
+                        <field name="name"/>
+                        <field name="doc_type" invisible="1"/>
+                      </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Rubros">
+                            <field name="ingresos_ids" nolabel='1' context="{'move_id' : id}">
+                              <tree string="Rubros" editable="bottom">
+                                <field name="move_state" invisible="1"/>
+                                <field name="move_id" invisible="1" />
+                                <field name="rubros_id" domain="[('rubro_nivel', '=', 'D'), ('rubro_tipo', '=', 'I')]"/>
+                                <field name="mov_type" invisible="1"/>
+                                <field name="saldo_move" attrs="{'invisible': [('move_state', '!=', 'draft')]}"/>
+                                <field name="ammount"/>
+                                <field name="notas"/>
+                              </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <button type="object" name="print_recaudos" string="Imprimir Recaudos"/>
+                    <hr />
+                    <div>
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_presupuesto_recaudo_move_tree" model="ir.ui.view">
+            <field name="name">Recaudo</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state == 'draft';gray:state == 'done' " string="Recaudo del presupuesto">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="fiscal_year"/>
+                    <field name="date"/>
+                    <field name="partner_id"/>
+                    <field name="voucher_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_presupuesto_recaudos_search" model="ir.ui.view">
+            <field name="name">Busqueda de recaudos</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <search string="Recaudos">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="ingresos_ids"/>   
+                    <field name="fiscal_year"/>
+                    <field name="partner_id"/>
+                    <field name="voucher_id"/>
+                    <field name="date" string="Fecha mayor o igual a" operator="&gt;="/>
+                    <field name="date" string="Fecha menor o igual a" operator="&lt;="/>
+                    <filter name="borrador" string="Borrador" domain="[('state', '=', 'draft')]"/>
+                    <filter name="confirmado" string="Confirmado" domain="[('state', '=', 'confirm')]"/>
+                    <filter name="rechazado" string="Rechazado" domain="[('state', '=', 'rejected')]"/>
+                    <filter name="anulado" string="Anulado" domain="[('state', '=', 'void')]"/>
+                    <separator/>
+                    <filter name="group_date" string="Por fecha" context="{'group_by' : 'date'}"/>
+                    <filter name="group_state" string="Por status" context="{'group_by' : 'state'}"/>
+                    <filter name="group_año_fiscal" string="Por año fiscal" context="{'group_by' : 'fiscal_year'}"/>
+                    <filter name="group_partner_id" string="Por tercero" context="{'group_by' : 'partner_id'}"/>
+                    <filter name="group_voucher_id" string="Por comprobante" context="{'group_by' : 'voucher_id'}"/>             
+                </search>
+            </field>
+        </record>
+
+        <record id="action_presupuesto_move_recaudo" model="ir.actions.act_window">
+            <field name="name">Recaudos</field>
+            <field name="res_model">presupuesto.move</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,search</field>
+            <field name="view_id" eval="view_presupuesto_recaudo_move_tree"/>
+            <field name="domain">[('doc_type','=','rec')]</field>
+            <field name="context">{'default_doc_type':'rec', 'search_default_doc_type':'rec'}</field>
+            <field name="search_view_id" ref="view_presupuesto_recaudos_search"/>
+            <field name="filter" eval="True"/>
+        </record>
+
+        <record id="action_presupuesto_recaudo_move_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_presupuesto_recaudo_move_tree"/>
+            <field name="act_window_id" ref="action_presupuesto_move_recaudo"/>
+        </record>
+
+        <record id="action_presupuesto_recaudo_move_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_presupuesto_recaudo_move_form"/>
+            <field name="act_window_id" ref="action_presupuesto_move_recaudo"/>
+        </record>
+
+        <menuitem action="action_presupuesto_move_recaudo" id="presupuesto_recaudo_move_form" parent="menu_view_presupuesto_recaudo_form" sequence="10" groups="l10n_co_budget.group_budget_user"/>
+
+        <!-- Certificados de disponibilidad presupuestal -->
+        <record id="view_presupuesto_cdp_move_form" model="ir.ui.view">
+            <field name="name">CDP</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <form string="CDP" version="7.0">
+                    <header>
+                        <button name="button_cancel" states="confirm" string="Cambiar a borrador" type="object" groups="presupuesto.group_presupuesto"/>
+
+                        <button name="button_confirm" states="draft" string="Confirmar" type="object" class="oe_highlight" groups="l10n_co_budget.group_budget_cdp_confirm"/>
+
+                        <button name="button_rejected" states="draft" string="Rechazar" type="object" class="oe_highlight"/>
+                        <button name="button_void" states="draft,confirm" string="Anular" type="object" groups="l10n_co_budget.group_budget_cdp_void" confirm="Desea anular este CDP?"/>
+                        <field name="state" widget="statusbar" nolabel="1" />
+                    </header>
+                    <group>
+                      <group>
+                        <field name="date" />
+                        <field name="period_id" invisible="1" />
+                        <field name="fiscal_year" invisible="1"/>
+                      </group>
+                      <group>
+                        <field name="name"/>
+                        <field name="doc_type" invisible="1" />
+                      </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Rubros">
+                            <field name="gastos_ids" nolabel='1' context="{'move_id' : id}">
+                              <tree string="Rubros" editable="bottom">
+                                <field name="move_id" invisible="1" />
+                                <field name="move_state" invisible="1"/>
+                                <field name="rubros_id" domain="[('rubro_nivel', '=', 'D'), ('rubro_tipo', '=', 'G')]"/>
+                                <field name="mov_type" invisible="1"/>
+                                <field name="saldo_move" attrs="{'invisible': [('move_state', '!=', 'draft')]}"/>
+                                <field name="ammount"/>
+                                <field name="notas"/>
+                              </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <group class="oe_subtotal_footer oe_right">
+                        <field name="amount_total" string="Total CDP"/>
+                        <field name="amount_cdp_adicion" string="Total adiciones al CDP"/>
+                        <field name="amount_cdp_reduccion" string="Total reducciones al CDP"/>
+                        <field name="amount_available" string="Total saldo sin utilizar"/>
+                    </group>
+                    <button type="object" name="print_cdp" string="Imprimir CDP"/>
+                    <div>
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_presupuesto_cdp_move_search" model="ir.ui.view">
+            <field name="name">Busqueda de documentos CDP</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <search string="CDP">
+                    <field name="name"/>
+                    <field name="description"/> 
+                    <field name="fiscal_year"/>
+                    <field name="gastos_ids"/>                    
+                    <field name="date" string="Fecha mayor o igual a" operator="&gt;="/>
+                    <field name="date" string="Fecha menor o igual a" operator="&lt;="/>
+                    <filter name="borrador" string="Borrador" domain="[('state', '=', 'draft')]"/>
+                    <filter name="confirmado" string="Confirmado" domain="[('state', '=', 'confirm')]"/>
+                    <filter name="rechazado" string="Rechazado" domain="[('state', '=', 'rejected')]"/>
+                    <filter name="anulado" string="Anulado" domain="[('state', '=', 'void')]"/>
+                    <separator/>
+                    <filter name="group_date" string="Por fecha" context="{'group_by' : 'date'}"/>
+                    <filter name="group_state" string="Por status" context="{'group_by' : 'state'}"/>
+                    <filter name="group_año_fiscal" string="Por año fiscal" context="{'group_by' : 'fiscal_year'}"/>                    
+                </search>
+            </field>
+        </record>
+
+        <record id="view_presupuesto_cdp_move_tree" model="ir.ui.view">
+            <field name="name">CDP</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state == 'draft';gray:state == 'done' " string="CDP">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="fiscal_year"/>
+                    <field name="date"/>
+                    <field name="rp_associates_cdp"/>
+                    <field name="state"/>                    
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_presupuesto_cdp_move" model="ir.actions.act_window">
+            <field name="name">Certificado de disponibilidad</field>
+            <field name="res_model">presupuesto.move</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,search</field>
+            <field name="view_id" eval="view_presupuesto_cdp_move_tree"/>
+            <field name="domain">[('doc_type','=','cdp')]</field>
+            <field name="context">{'default_doc_type':'cdp', 'search_default_doc_type':'cdp'}</field>
+            <field name="search_view_id" ref="view_presupuesto_cdp_move_search"/>
+            <field name="filter" eval="True"/>
+        </record>
+
+        <record id="action_presupuesto_cdp_move_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_presupuesto_cdp_move_tree"/>
+            <field name="act_window_id" ref="action_presupuesto_cdp_move"/>
+        </record>
+
+        <record id="action_presupuesto_cdp_move_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_presupuesto_cdp_move_form"/>
+            <field name="act_window_id" ref="action_presupuesto_cdp_move"/>
+        </record>
+
+        <menuitem action="action_presupuesto_cdp_move" id="presupuesto_cdp_form_move" parent="menu_view_presupuesto_gasto_form" sequence="10" groups="l10n_co_budget.group_budget_user"/>
+
+        <!-- Registro presupuestal -->
+        <record id="view_presupuesto_compromiso_move_form" model="ir.ui.view">
+            <field name="name">Registro Presupuestal</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <form string="Compromiso" version="7.0">
+                    <header>
+                        <button name="button_cancel" states="confirm" string="Cambiar a borrador" type="object" groups="presupuesto.group_presupuesto"/>
+                        <button name="button_confirm" states="draft" string="Confirmar" type="object" class="oe_highlight"/>
+                        <button name="button_rejected" states="draft" string="Rechazar" type="object" class="oe_highlight"/>
+                        <button name="button_void" states="draft,confirm" string="Anular" type="object" groups="l10n_co_budget.group_budget_comp_void" confirm="Desea anular este registro presupuestal?"/>
+                        <field name="state" widget="statusbar" nolabel="1" />
+                    </header>
+                    <field name="rubros_move_rel" invisible="1"/>
+                    <group>
+                      <group>
+                        <field name="date"/>
+                        <field name="period_id" invisible="1" />
+                        <field name="fiscal_year" invisible="1"/>
+                        <field name="move_rel" string="CDP" domain="[('doc_type', '=', 'cdp'), ('state', '=', 'confirm'), ('date', '&lt;=', date)]" required="1"/>
+                        <field name="partner_id"  required="1" domain="[('supplier', '=', True)]"/>                        
+                      </group>
+                      <group>
+                        <field name="name"/>
+                        <field name="doc_type" invisible="1"/>
+<!--                         <field name="contract_id" domain="[('cdp', '=', move_rel)]"/> -->
+                        <field name="contract_id"/>
+                      </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Rubros">
+                            <field name="gastos_ids" nolabel='1' context="{'move_id' : id}">
+<!--                             <tree string="Rubros" editable="bottom" create="false" delete="false" > -->
+                                <tree string="Rubros" editable="bottom">
+                                    <field name="move_state" invisible="1"/>
+                                    <field name="move_id" invisible="1" />
+<!--                                     <field name="rubros_id" readonly="1"/> -->
+                                    <field name="rubros_id" domain="[('rubro_nivel', '=', 'D'), ('rubro_tipo', '=', 'G')]" options="{'no_create' : True, 'no_create_edit' : True}"/>
+<!--                                     <field name="rubros_id" domain="[('id', '=', rubros_id.id)]" options="{'no_create' : True, 'no_create_edit' : True}"/> -->
+                                    <field name="mov_type" invisible="1"/>
+                                    <field name="saldo_move" attrs="{'invisible': [('move_state', '!=', 'draft')]}"/>
+                                    <field name="ammount"/>
+                                    <field name="notas"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <group class="oe_subtotal_footer oe_right">
+                        <field name="amount_total" string="Total Registro Presupuestal"/>
+                        <field name="amount_available" string="Total saldo sin utilizar"/>                        
+                    </group>
+                    <button type="object" name="print_rp" string="Imprimir RP"/>
+                    <div>
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_presupuesto_compromiso_move_tree" model="ir.ui.view">
+            <field name="name">Compromiso</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state == 'draft';gray:state == 'done' " string="Compromiso">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="fiscal_year"/>
+                    <field name="date"/>
+                    <field name="move_rel" string="CDP"/>
+                    <field name="contract_id"/>
+                    <field name="partner_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_presupuesto_rp_move_search" model="ir.ui.view">
+            <field name="name">Busqueda de documentos RP</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <search string="Registro presupuestal">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="fiscal_year"/>
+                    <field name="gastos_ids"/>  
+                    <field name="move_rel" string="CDP Nro."/>
+                    <field name="contract_id"/>
+                    <field name="partner_id"/>                    
+                    <field name="date" string="Fecha mayor o igual a" operator="&gt;="/>
+                    <field name="date" string="Fecha menor o igual a" operator="&lt;="/>
+                    <filter name="borrador" string="Borrador" domain="[('state', '=', 'draft')]"/>
+                    <filter name="confirmado" string="Confirmado" domain="[('state', '=', 'confirm')]"/>
+                    <filter name="rechazado" string="Rechazado" domain="[('state', '=', 'rejected')]"/>
+                    <filter name="anulado" string="Anulado" domain="[('state', '=', 'void')]"/>
+                    <separator/>
+                    <filter name="group_date" string="Por fecha" context="{'group_by' : 'date'}"/>
+                    <filter name="group_state" string="Por status" context="{'group_by' : 'state'}"/>
+                    <filter name="group_cdp" string="Por CDP" context="{'group_by' : 'move_rel'}"/>
+                    <filter name="group_tercero" string="Por Tercero" context="{'group_by' : 'partner_id'}"/>
+                    <filter name="group_contrato" string="Por Contrato" context="{'group_by' : 'contract_id'}"/>
+                    <filter name="group_año_fiscal" string="Por año fiscal" context="{'group_by' : 'fiscal_year'}"/>    
+                </search>
+
+            </field>
+        </record>
+
+        <record id="action_presupuesto_compromiso_move" model="ir.actions.act_window">
+            <field name="name">Registro presupuestal</field>
+            <field name="res_model">presupuesto.move</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" eval="view_presupuesto_compromiso_move_tree"/>
+            <field name="domain">[('doc_type','=','reg')]</field>
+            <field name="context">{'default_doc_type':'reg', 'search_default_doc_type':'reg'}</field>
+            <field name="search_view_id" ref="view_presupuesto_rp_move_search"/>
+            <field name="filter" eval="True"/>
+        </record>
+
+        <record id="action_presupuesto_compromiso_move_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_presupuesto_compromiso_move_tree"/>
+            <field name="act_window_id" ref="action_presupuesto_compromiso_move"/>
+        </record>
+
+        <record id="action_presupuesto_compromiso_move_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_presupuesto_compromiso_move_form"/>
+            <field name="act_window_id" ref="action_presupuesto_compromiso_move"/>
+        </record>
+
+        <menuitem action="action_presupuesto_compromiso_move" id="presupuesto_compromiso_form_move" parent="menu_view_presupuesto_gasto_form" sequence="20" groups="l10n_co_budget.group_budget_user"/>
+
+        <!-- Obligación presupuestal -->
+        <record id="view_presupuesto_obligacion_move_form" model="ir.ui.view">
+            <field name="name">Ordenes de Pago</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <form string="Obligación" version="7.0">
+                    <header>
+                        <button name="button_cancel" states="confirm" string="Cambiar a borrador" type="object" groups="presupuesto.group_presupuesto"/>
+                        <button name="button_confirm" states="draft" string="Confirmar" type="object" class="oe_highlight"/>
+                        <button name="button_rejected" states="draft" string="Rechazar" type="object" class="oe_highlight"/>
+                        <button name="button_void" states="draft,confirm" string="Anular" type="object" groups="l10n_co_budget.group_budget_obl_void" confirm="Desea anular esta orden de pago?"/>                    
+                        <field name="state" widget="statusbar" nolabel="1" />
+                    </header>
+                    <group>
+                      <group>
+                        <field name="date" />
+                        <field name="period_id" invisible="1" />
+                        <field name="fiscal_year" invisible="1"/>
+                        <field name="partner_id"  required="1" domain="[('supplier', '=', True)]"/>
+                        <field name="move_rel" string="Registro presupuestal" domain="[('doc_type', '=', 'reg'), ('partner_id', '=?', partner_id), ('date', '&lt;=', date), ('state', '=', 'confirm')]" required="1"/>
+                        <field name="payslip_id"/>   
+                      </group>
+                      <group>
+                        <field name="name"/>
+                        <field name="doc_type" invisible="1"/>
+                        <field name="invoice_id"/>
+<!--                         <field name="invoice_id" domain="[('partner_id', '=?', partner_id), ('state', '=', 'open')]" context="{'default_type' : 'in_invoice', 'default_journal_id' : 2}"/> -->
+                        <field name="amount_invoice" string="Monto total de factura" readonly="1"/>
+                        <field name="amount_tax" string="Monto impuesto (-)" readonly="1"/>
+                        <field name="amount_untaxed" string="Valor total" readonly="1"/>
+                        <field name="amount_residual" string="Saldo por pagar" readonly="1"/>
+                      </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Rubros">
+                            <field name="gastos_ids" nolabel='1' context="{'move_id' : id}">
+                              <tree string="Rubros" editable="bottom" >
+                                <field name="move_id" invisible="1" />
+                                <field name="move_state" invisible="1"/>
+                                <field name="rubros_id" domain="[('rubro_nivel', '=', 'D'), ('rubro_tipo', '=', 'G')]" options="{'no_create' : True, 'no_create_edit' : True}"/>
+                                <field name="mov_type" invisible="1"/>
+                                <field name="saldo_move" attrs="{'invisible': [('move_state', '!=', 'draft')]}"/>
+                                <field name="ammount"/>
+                                <field name="notas"/>
+                              </tree>
+                            </field>
+                        </page>
+                        <page string="Información contable">
+                            <group>
+                                <field name="account_move_line_ids" nolabel="1" options="{'no_create' : True, 'no_create_edit' : True}" readonly="1">
+                                    <tree string="Apuntes contables" create="0" edit="0" delete="0">
+                                        <field name="account_id"/>
+                                        <field name="partner_id"/>
+                                        <field name="name"/>
+                                        <field name="debit"/>
+                                        <field name="credit"/>
+                                        <field name="date_maturity"/>
+                                    </tree>
+                                </field>  
+                            </group>
+                        </page>
+                    </notebook>
+                    <group>
+                        <group>
+                            <field name="tax_line_ids" nolabel="1">
+                                <tree string="Impuestos" create="0" edit="0">
+                                    <field name="name"/>
+                                    <field name="account_id"/>
+                                    <field name="amount"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group class="oe_subtotal_footer oe_right">
+                            <field name="amount_total" string="Total Orden de Pago"/>
+                            <field name="amount_available" string="Total saldo sin utilizar"/>
+                        </group>
+                    </group>
+                    <button type="object" name="print_orden_pago" string="Imprimir orden de pago"/>
+                    <div>
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_presupuesto_obligacion_move_tree" model="ir.ui.view">
+            <field name="name">Obligación</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state == 'draft';gray:state == 'done' " string="Obligación">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="fiscal_year"/>
+                    <field name="date"/>
+                    <field name="move_rel" string="Registro presupuestal"/>
+                    <field name="partner_id"/>
+                    <field name="invoice_id"/>
+                    <field name="payslip_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+       <record id="view_presupuesto_ordenes_pago_search" model="ir.ui.view">
+            <field name="name">Busqueda de ordenes de pago</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <search string="Ordenes de pago">
+                    <field name="name"/>
+                    <field name="description"/> 
+                    <field name="fiscal_year"/>
+                    <field name="gastos_ids"/>  
+                    <field name="move_rel" string="Registro presupuestal"/>
+                    <field name="invoice_id"/> 
+                    <field name="payslip_id"/>
+                    <field name="partner_id"/>
+                    <field name="date" string="Fecha mayor o igual a" operator="&gt;="/>
+                    <field name="date" string="Fecha menor o igual a" operator="&lt;="/>
+                    <filter name="borrador" string="Borrador" domain="[('state', '=', 'draft')]"/>
+                    <filter name="confirmado" string="Confirmado" domain="[('state', '=', 'confirm')]"/>
+                    <filter name="rechazado" string="Rechazado" domain="[('state', '=', 'rejected')]"/>
+                    <filter name="anulado" string="Anulado" domain="[('state', '=', 'void')]"/>
+                    <separator/>
+                    <filter name="group_date" string="Por fecha" context="{'group_by' : 'date'}"/>
+                    <filter name="group_state" string="Por status" context="{'group_by' : 'state'}"/>
+                    <filter name="group_año_fiscal" string="Por año fiscal" context="{'group_by' : 'fiscal_year'}"/>
+                    <filter name="group_registro_presupuestal" string="Por registro presupuestal" context="{'group_by' : 'move_rel'}"/>   <filter name="group_factura" string="Por factura" context="{'group_by' : 'invoice_id'}"/>
+                    <filter name="group_nomina" string="Por nomina" context="{'group_by' : 'payslip_id'}"/>
+                    <filter name="group_tercero" string="Por tercero" context="{'group_by' : 'partner_id'}"/>                         
+                </search>
+            </field>
+        </record>
+
+        <record id="action_presupuesto_obligacion_move" model="ir.actions.act_window">
+            <field name="name">Ordenes de pago</field>
+            <field name="res_model">presupuesto.move</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,search</field>
+            <field name="view_id" eval="view_presupuesto_obligacion_move_tree"/>
+            <field name="domain">[('doc_type','=','obl')]</field>
+            <field name="context">{'default_doc_type':'obl', 'search_default_doc_type':'obl'}</field>
+            <field name="search_view_id" ref="view_presupuesto_ordenes_pago_search"/>
+            <field name="filter" eval="True"/>
+        </record>
+
+        <record id="action_presupuesto_obligacion_move_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_presupuesto_obligacion_move_tree"/>
+            <field name="act_window_id" ref="action_presupuesto_obligacion_move"/>
+        </record>
+
+        <record id="action_presupuesto_obligacion_move_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_presupuesto_obligacion_move_form"/>
+            <field name="act_window_id" ref="action_presupuesto_obligacion_move"/>
+        </record>
+
+        <menuitem action="action_presupuesto_obligacion_move" id="presupuesto_obligacion_move_form" parent="menu_view_presupuesto_gasto_form" sequence="40" groups="l10n_co_budget.group_budget_user"/>
+
+        <!-- Orden de pago presupuestal -->
+        <record id="view_presupuesto_pago_move_form" model="ir.ui.view">
+            <field name="name">pago</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <form string="Pago presupuestal" version="7.0">
+                    <header>
+                        <button name="button_cancel" states="confirm" string="Cambiar a borrador" type="object" groups="presupuesto.group_presupuesto"/>
+                        <button name="button_confirm" states="draft" string="Confirmar" type="object" class="oe_highlight"/>
+                        <button name="button_rejected" states="draft" string="Rechazar" type="object" class="oe_highlight"/>
+                        <button name="button_void" states="draft,confirm" string="Anular" type="object" groups="l10n_co_budget.group_budget_pago_void" confirm="Desea anular este pago?"/>
+                        <field name="state" widget="statusbar" nolabel="1" />
+                    </header>
+                    <group>
+                      <group>
+                        <field name="date" />
+                        <field name="period_id" invisible="1" />
+                        <field name="fiscal_year" invisible="1"/>
+                        <field name="partner_id" required="1" domain="[('supplier', '=', True)]"/>
+<!--                         <field name="payment_journal_id" required="1" domain="[('at_least_one_outbound','=',True),('type','in',['bank','cash'])]" options="{'no_open' : True, 'no_create' : True}"/>     -->                  
+                      </group>
+                      <group>
+                        <field name="name"/>
+                        <field name="doc_type" invisible="1"/>
+                        <field name="move_rel" string="Orden de pago" domain="[('doc_type', '=', 'obl'), ('partner_id', '=', partner_id), ('date', '&lt;=', date), ('state', '=', 'confirm')]" options="{'no_open' : True, 'no_create' : True}" required="1"/>
+                        <field name="voucher_id" domain="[('partner_id', '=', partner_id)]" context="{'default_payment_type' : 'outbound', 'default_partner_type' : 'supplier', 'default_partner_id' : partner_id, 'default_amount' : amount_total, 'default_pago_presupuestal' : True}"/>
+                        <field name="amount_tax_obligacion" string="Total impuesto" readonly="1"/>
+                      </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Rubros">
+                            <field name="gastos_ids" nolabel='1' context="{'move_id' : id}">
+                              <tree string="Rubros" editable="bottom" >
+                                <field name="move_id" invisible="1" />
+                                <field name="move_state" invisible="1"/>
+                                <field name="rubros_id" domain="[('rubro_nivel', '=', 'D'), ('rubro_tipo', '=', 'G')]" options="{'no_create' : True, 'no_create_edit' : True}"/>
+                                <field name="mov_type" invisible="1"/>
+                                <field name="saldo_move" attrs="{'invisible': [('move_state', '!=', 'draft')]}"/>
+                                <field name="ammount"/>
+                                <field name="notas"/>
+                              </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <group class="oe_subtotal_footer oe_right">
+                        <field name="amount_total" string="Total Pago Presupuestal"/>
+                    </group>
+                    <button type="object" name="print_pago_presupuestal" string="Imprimir pago presupuestal"/>
+                    <div>
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_presupuesto_pago_move_tree" model="ir.ui.view">
+            <field name="name">Pago Presupuestal</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state == 'draft';gray:state == 'done' " string="Pago">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="fiscal_year"/>
+                    <field name="date"/>
+                    <field name="move_rel" string="Orden de pago"/>
+                    <field name="partner_id"/> 
+                    <field name="voucher_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_presupuesto_pago_presupuestal_search" model="ir.ui.view">
+            <field name="name">Busqueda de pago presupuestal</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <search string="Pago presupuestal">
+                    <field name="name"/>
+                    <field name="description"/> 
+                    <field name="fiscal_year"/>
+                    <field name="gastos_ids"/>  
+                    <field name="move_rel" string="Orden de pago"/>
+                    <field name="voucher_id"/> 
+                    <field name="partner_id"/>
+                    <field name="date" string="Fecha mayor o igual a" operator="&gt;="/>
+                    <field name="date" string="Fecha menor o igual a" operator="&lt;="/>
+                    <filter name="borrador" string="Borrador" domain="[('state', '=', 'draft')]"/>
+                    <filter name="confirmado" string="Confirmado" domain="[('state', '=', 'confirm')]"/>
+                    <filter name="rechazado" string="Rechazado" domain="[('state', '=', 'rejected')]"/>
+                    <filter name="anulado" string="Anulado" domain="[('state', '=', 'void')]"/>
+                    <separator/>
+                    <filter name="group_date" string="Por fecha" context="{'group_by' : 'date'}"/>
+                    <filter name="group_state" string="Por status" context="{'group_by' : 'state'}"/>
+                    <filter name="group_año_fiscal" string="Por año fiscal" context="{'group_by' : 'fiscal_year'}"/>
+                    <filter name="group_orden_pago" string="Por orden de pago" context="{'group_by' : 'move_rel'}"/>   
+                    <filter name="group_voucher" string="Por comprobante" context="{'group_by' : 'voucher_id'}"/>
+                    <filter name="group_tercero" string="Por tercero" context="{'group_by' : 'partner_id'}"/>                         
+                </search>
+            </field>
+        </record>
+
+        <record id="action_presupuesto_pago_move" model="ir.actions.act_window">
+            <field name="name">Pago Presupuestal</field>
+            <field name="res_model">presupuesto.move</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,search</field>
+            <field name="view_id" eval="view_presupuesto_pago_move_tree"/>
+            <field name="domain">[('doc_type','=','pago')]</field>
+            <field name="context">{'default_doc_type':'pago', 'search_default_doc_type':'pago'}</field>
+            <field name="search_view_id" ref="view_presupuesto_pago_presupuestal_search"/>
+            <field name="filter" eval="True"/>
+        </record>
+
+        <record id="action_presupuesto_pago_move_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_presupuesto_pago_move_tree"/>
+            <field name="act_window_id" ref="action_presupuesto_pago_move"/>
+        </record>
+
+        <record id="action_presupuesto_pago_move_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_presupuesto_pago_move_form"/>
+            <field name="act_window_id" ref="action_presupuesto_pago_move"/>
+        </record>
+
+        <menuitem action="action_presupuesto_pago_move" id="presupuesto_pago_move_form" parent="menu_view_presupuesto_gasto_form" sequence="50" groups="l10n_co_budget.group_budget_treasurer"/>
+
+        <!-- Modificaciones CDP -->
+        <record id="view_presupuesto_modificacion_cdp_form" model="ir.ui.view">
+            <field name="name">Modificaciones CDP</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <form string="Modificaciones CDP" version="7.0">
+                    <header>
+                        <button name="button_cancel" states="confirm" string="Cambiar a borrador" type="object" groups="presupuesto.group_presupuesto"/>
+                        <button name="button_confirm" states="draft" string="Confirmar" type="object" class="oe_highlight"/>
+                        <button name="button_rejected" states="draft" string="Rechazar" type="object" class="oe_highlight"/>
+                        <button name="button_void" states="draft,confirm" string="Anular" type="object" groups="l10n_co_budget.group_budget_pago_void" confirm="Desea anular la modificación del CDP?"/>
+                        <field name="state" widget="statusbar" nolabel="1" />
+                    </header>
+                    <group>
+                        <group>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="name"/>
+                            <field name="move_rel" string="Documento CDP" domain="[('doc_type', '=', 'cdp'), ('state', '=', 'confirm'), ('date', '&lt;=', date)]" required="1" options="{'no_open' : True, 'no_create' : True, 'no_create_edit' : True}"/>
+                        </group>
+                        <field name="doc_type" invisible="1" />
+                        <field name="period_id" invisible="1" />
+                        <field name="fiscal_year" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Rubros">
+                            <field name="gastos_ids" nolabel='1' context="{'move_id' : id}">
+                                <tree string="Rubros" editable="bottom">
+                                    <field name="move_id" invisible="1" />
+                                    <field name="move_state" invisible="1"/>
+                                    <field name="rubros_id" domain="[('rubro_nivel', '=', 'D'), ('rubro_tipo', '=', 'G')]" options="{'no_create' : True, 'no_create_edit' : True}"/>
+                                    <field name="mov_type" />
+                                    <field name="saldo_move" attrs="{'invisible': [('move_state', '!=', 'draft')]}"/>
+                                    <field name="ammount"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <button type="object" name="print_mod_cdp" string="Imprimir Modificación CDP"/>
+                    <hr />
+                    <div>
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_presupuesto_modificacion_cdp_tree" model="ir.ui.view">
+            <field name="name">Modificaciones CDP</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state == 'draft';gray:state == 'done' " string="Modificacion">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="fiscal_year"/>
+                    <field name="date"/>
+                    <field name="move_rel" string="Documento CDP"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+       <record id="view_presupuesto_modificaciones_cdp_move_search" model="ir.ui.view">
+            <field name="name">Busqueda de modificacion CDP</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <search string="Modificación CDP">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="fiscal_year"/>
+                    <field name="gastos_ids"/>  
+                    <field name="move_rel" string="Documento CDP"/>
+                    <field name="date" string="Fecha mayor o igual a" operator="&gt;="/>
+                    <field name="date" string="Fecha menor o igual a" operator="&lt;="/>
+                    <filter name="borrador" string="Borrador" domain="[('state', '=', 'draft')]"/>
+                    <filter name="confirmado" string="Confirmado" domain="[('state', '=', 'confirm')]"/>
+                    <filter name="rechazado" string="Rechazado" domain="[('state', '=', 'rejected')]"/>
+                    <filter name="anulado" string="Anulado" domain="[('state', '=', 'void')]"/>
+                    <separator/>
+                    <filter name="group_date" string="Por fecha" context="{'group_by' : 'date'}"/>
+                    <filter name="group_state" string="Por status" context="{'group_by' : 'state'}"/>
+                    <filter name="group_cdp_rp" string="Por documento CDP" context="{'group_by' : 'move_rel'}"/>
+                    <filter name="group_año_fiscal" string="Por año fiscal" context="{'group_by' : 'fiscal_year'}"/>    
+                </search>
+
+            </field>
+        </record>     
+
+        <record id="action_presupuesto_modificacion_cdp" model="ir.actions.act_window">
+            <field name="name">Modificaciones CDP</field>
+            <field name="res_model">presupuesto.move</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,search</field>
+            <field name="view_id" eval="view_presupuesto_modificacion_cdp_tree"/>
+            <field name="domain">[('doc_type','=','mod_cdp')]</field>
+            <field name="context">{'default_doc_type':'mod_cdp', 'search_default_doc_type':'mod_cdp'}</field>
+            <field name="search_view_id" ref="view_presupuesto_modificaciones_cdp_move_search"/>
+            <field name="filter" eval="True"/>
+        </record>
+
+        <record id="action_presupuesto_modificacion_cdp_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_presupuesto_modificacion_cdp_tree"/>
+            <field name="act_window_id" ref="action_presupuesto_modificacion_cdp"/>
+        </record>
+
+        <record id="action_presupuesto_modificacion_cdp_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_presupuesto_modificacion_cdp_form"/>
+            <field name="act_window_id" ref="action_presupuesto_modificacion_cdp"/>
+        </record>
+
+        <menuitem action="action_presupuesto_modificacion_cdp" id="presupuesto_modificacion_cdp" parent="menu_view_presupuesto_gasto_form" sequence="15" groups="l10n_co_budget.group_budget_user"/>
+
+        <!-- Modificaciones RP -->
+        <record id="view_presupuesto_modificacion_rp_form" model="ir.ui.view">
+            <field name="name">Modificaciones RP</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <form string="Modificaciones RP" version="7.0">
+                    <header>
+                        <button name="button_cancel" states="confirm" string="Cambiar a borrador" type="object" groups="presupuesto.group_presupuesto"/>
+                        <button name="button_confirm" states="draft" string="Confirmar" type="object" class="oe_highlight"/>
+                        <button name="button_rejected" states="draft" string="Rechazar" type="object" class="oe_highlight"/>
+                        <button name="button_void" states="draft,confirm" string="Anular" type="object" groups="l10n_co_budget.group_budget_pago_void" confirm="Desea anular esta modificacion de RP?"/>
+                        <field name="state" widget="statusbar" nolabel="1" />
+                    </header>
+                    <group>
+                        <group>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="name"/>
+                            <field name="move_rel" string="Documento RP" domain="[('doc_type', '=', 'reg'), ('state', '=', 'confirm'), ('date', '&lt;=', date)]" required="1" options="{'no_open' : True, 'no_create' : True, 'no_create_edit' : True}"/>
+                        </group>
+                        <field name="doc_type" invisible="1" />
+                        <field name="period_id" invisible="1" />
+                        <field name="fiscal_year" invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                    <notebook colspan="4">
+                        <page string="Rubros">
+                            <field name="gastos_ids" nolabel='1' context="{'move_id' : id}">
+                                <tree string="Rubros" editable="bottom">
+                                    <field name="move_id" invisible="1" />
+                                    <field name="move_state" invisible="1"/>
+                                    <field name="rubros_id" domain="[('rubro_nivel', '=', 'D'), ('rubro_tipo', '=', 'G')]" options="{'no_create' : True, 'no_create_edit' : True}"/>
+                                    <field name="mov_type" />
+                                    <field name="saldo_move" attrs="{'invisible': [('move_state', '!=', 'draft')]}"/>
+                                    <field name="ammount"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <button type="object" name="print_mod_rp" string="Imprimir Modificación RP"/>
+                    <hr />
+                    <div>
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_presupuesto_modificacion_rp_tree" model="ir.ui.view">
+            <field name="name">Modificaciones RP</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state == 'draft';gray:state == 'done' " string="Modificacion">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="fiscal_year"/>
+                    <field name="date"/>
+                    <field name="move_rel" string="Documento RP"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+       <record id="view_presupuesto_modificaciones_rp_move_search" model="ir.ui.view">
+            <field name="name">Busqueda de modificacion RP</field>
+            <field name="model">presupuesto.move</field>
+            <field name="arch" type="xml">
+                <search string="Modificación CDP">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="fiscal_year"/>
+                    <field name="gastos_ids"/>  
+                    <field name="move_rel" string="Documento RP"/>
+                    <field name="date" string="Fecha mayor o igual a" operator="&gt;="/>
+                    <field name="date" string="Fecha menor o igual a" operator="&lt;="/>
+                    <filter name="borrador" string="Borrador" domain="[('state', '=', 'draft')]"/>
+                    <filter name="confirmado" string="Confirmado" domain="[('state', '=', 'confirm')]"/>
+                    <filter name="rechazado" string="Rechazado" domain="[('state', '=', 'rejected')]"/>
+                    <filter name="anulado" string="Anulado" domain="[('state', '=', 'void')]"/>
+                    <separator/>
+                    <filter name="group_date" string="Por fecha" context="{'group_by' : 'date'}"/>
+                    <filter name="group_state" string="Por status" context="{'group_by' : 'state'}"/>
+                    <filter name="group_cdp_rp" string="Por RP" context="{'group_by' : 'move_rel'}"/>
+                    <filter name="group_año_fiscal" string="Por año fiscal" context="{'group_by' : 'fiscal_year'}"/>    
+                </search>
+
+            </field>
+        </record>     
+
+        <record id="action_presupuesto_modificacion_rp" model="ir.actions.act_window">
+            <field name="name">Modificaciones RP</field>
+            <field name="res_model">presupuesto.move</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,search</field>
+            <field name="view_id" eval="view_presupuesto_modificacion_rp_tree"/>
+            <field name="domain">[('doc_type','=','mod_reg')]</field>
+            <field name="context">{'default_doc_type':'mod_reg', 'search_default_doc_type':'mod_reg'}</field>
+            <field name="search_view_id" ref="view_presupuesto_modificaciones_rp_move_search"/>
+            <field name="filter" eval="True"/>
+        </record>
+
+        <record id="action_presupuesto_modificacion_rp_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_presupuesto_modificacion_rp_tree"/>
+            <field name="act_window_id" ref="action_presupuesto_modificacion_rp"/>
+        </record>
+
+        <record id="action_presupuesto_modificacion_rp_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_presupuesto_modificacion_rp_form"/>
+            <field name="act_window_id" ref="action_presupuesto_modificacion_rp"/>
+        </record>
+
+        <menuitem action="action_presupuesto_modificacion_rp" id="presupuesto_modificacion_cdp_rp" parent="menu_view_presupuesto_gasto_form" sequence="25" groups="l10n_co_budget.group_budget_user"/>
+
+    </data>
+</openerp>

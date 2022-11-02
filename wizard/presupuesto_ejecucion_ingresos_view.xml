@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_presupuesto_ejecucion_ingresos" model="ir.ui.view">
+            <field name="name">Ejecucion de Ingresos</field>
+            <field name="model">presupuesto.ejecucion.ingresos</field>
+            <field name="arch" type="xml">
+                <form string="Ejecucion de Ingresos" >
+                    <group>
+                        <field name="fiscalyear_id" domain="[('state','=','draft')]"/>
+                        <field name="chart_rubros_id" widget='selection'/>
+                    </group>
+                    <group string="Periodos"  col="4">
+                         <field name="period_from"  domain="[('fiscalyear_id', '=', fiscalyear_id), ('special', '=', False)]"/>
+                         <field name="period_to" domain="[('fiscalyear_id', '=', fiscalyear_id), ('special', '=', False)]" />
+                         <field name="period_ant"  invisible="1"/>
+                    </group>
+                    <group>
+                        <field name="excel_file_name" invisible="1"/>
+                        <field name="excel_file" filename="excel_file_name"/>
+                    </group>
+                    <footer>
+                        <button string="Imprimir" name="create_presupuesto_ejecucion_ing" type="object" class="oe_highlight"/>
+<!--                         <span> </span> -->
+                        <button string="Generar en Excel" name="create_presupuesto_ejecucion_ing_excel" type="object" class="oe_highlight"/>
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_presupuesto_ejecucion_ingresos2" model="ir.actions.act_window">
+            <field name="name">Ejecución de Ingresos</field>
+            <field name="res_model">presupuesto.ejecucion.ingresos</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_presupuesto_ejecucion_ingresos"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem  action="action_presupuesto_ejecucion_ingresos2" id="menu_action_presupuesto_ejecucion_ingresos" parent="menu_view_presupuesto_recaudo_form" sequence="30" groups="l10n_co_budget.group_budget_user"/>
+
+    </data>
+</odoo>

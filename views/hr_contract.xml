@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="hr_contract_form">
+            <field name="name">hr_contract</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="type">form</field>
+            <field name="priority" eval="7"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='information']" position="after">+
+                    <page string="Presupuesto">
+                      <group>
+                        <field name="cdp" domain="[('doc_type', '=', 'cdp')]"/>
+                      </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

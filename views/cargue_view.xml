@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<!--<record id="presupuesto_cargue_tree_view" model="ir.ui.view">
+			<field name="name">presupuesto.cargue.tree</field>
+			<field name="model">presupuesto.cargue</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Cargue de presupuesto">
+					
+				</tree>
+			</field>
+		</record>-->
+		<record id="presupuesto_cargue_from_view" model="ir.ui.view">
+			<field name="name">presupuesto.cargue.form</field>
+			<field name="model">presupuesto.cargue</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Cargue de presupuesto">
+					<header>
+						<field name="state" widget="statusbar" nolabel="1" />
+					</header>
+					<group>
+						<field name="move_id" />
+						<field name="file" />
+						<button name="start" type="object" string="Procesar" />
+					
+					</group>
+				</form>
+			</field>
+		</record>
+		<record id="action_presupuesto_cargue" model="ir.actions.act_window">
+			<field name="name">Cargue de presupuesto</field>
+			<field name="res_model">presupuesto.cargue</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+		</record>
+		<menuitem action="action_presupuesto_cargue" id="item_presupuesto_cargue" name="Cargue de presupuesto" parent="menu_view_presupuesto_form" sequence="40"/>
+
+
+		<record id="presupuesto_cargue_documentos_from_view" model="ir.ui.view">
+			<field name="name">presupuesto.cargue.documentos.form</field>
+			<field name="model">presupuesto.cargue.documento</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Cargue de documentos de presupuesto">
+					<group>
+						<field name="procesar" invisible="1"/>
+						<field name="file"/>
+						<field name="doc_type"/>							
+					</group>
+					<footer>
+						<button name="migrate_documents" type="object" string="Procesar" attrs="{'invisible': [('procesar','!=', True)]}"/>	
+						<button special="cancel" string="Cancelar" />	
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_presupuesto_cargue_documento" model="ir.actions.act_window">
+			<field name="name">Cargue Documentos</field>
+			<field name="res_model">presupuesto.cargue.documento</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+		
+		<menuitem action="action_presupuesto_cargue_documento" id="item_presupuesto_cargue_documentos" name="Cargue de documentos" parent="menu_view_presupuesto_form" sequence="50"/>
+
+	</data>
+</openerp>

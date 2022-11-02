@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_presupuesto_reports" model="ir.ui.view">
+            <field name="name">Imprimir Presupuesto</field>
+            <field name="model">presupuesto.reports</field>
+            <field name="arch" type="xml">
+                <form string="Imprimir Presupuesto" version="7.0">
+                    <group>
+                        <field name="fiscalyear_id" domain="[('state','=','draft')]"/>
+                        <field name="chart_rubros_id" widget='selection'/>
+                        <field name="move_id" domain="[('fiscal_year','=', fiscalyear_id), ('state','=', 'confirm'), '|', ('doc_type','=','ini'), ('doc_type','=','mod')]"/>
+                    </group>
+                    <footer>
+                        <button string="Imprimir" name="create_presupuesto_reports" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_presupuesto_reports" model="ir.actions.act_window">
+            <field name="name">Imprimir Presupuesto</field>
+            <field name="res_model">presupuesto.reports</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_presupuesto_reports"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem icon="STOCK_INDENT" action="action_presupuesto_reports" id="menu_action_presupuesto_reports" parent="menu_view_presupuesto_year_form" sequence="30" groups="l10n_co_budget.group_budget_user"/>
+
+    </data>
+</openerp>

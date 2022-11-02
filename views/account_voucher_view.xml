@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="account_invoice_voucher_form">
+            <field name="name">account_invoice_voucher_form</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_sale_receipt_form"/>
+            <field name="type">form</field>
+            <field name="priority" eval="7"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='cancel_voucher'][last()]" position="after">
+                    <button name="generate_rec" type="object" string="Recaudo Presupuesto" class="oe_highlight"
+                      attrs="{'invisible': ['|',('rec','!=', False),('rec_aut','!=', False)]}"/>
+                </xpath>
+                <field name="journal_id" position="after">
+                    <field name="rec_aut"/>
+                    <field name="rubro_pres"/>
+                    <field name="rec"/>
+                </field>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="account_payment_voucher_form">
+            <field name="name">account_payment_voucher_form</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_purchase_receipt_form"/>
+            <field name="type">form</field>
+            <field name="priority" eval="7"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='cancel_voucher'][last()]" position="after">
+                    <button name="generate_pago" type="object" string="Pago Presupuesto" class="oe_highlight"
+                      attrs="{'invisible': ['|',('pago','!=', False),('rec_aut','!=', False)]}"/>
+                </xpath>
+                  <group>
+                  <field name="rec_aut"/>
+                  <field name="obl" attrs="{'readonly':[('pago','!=',False)]}"/>
+                  <field name="pago" domain="[('move_rel', '=', obl)]"
+                    attrs="{'invisible': [('pago','=', False)]}"/>
+                  </group>
+            </field>
+        </record>
+
+    </data>
+</openerp>

@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="extended_external_layout">
+            <!-- Multicompany -->
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+
+            <t t-call="l10n_co_budget.extended_external_layout_header" />
+            <t t-raw="0" />
+            <t t-call="report.external_layout_footer" />
+        </template>
+
+        <template id="extended_external_layout_header">
+            <div class="header">
+<!--                 <style>
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                    }
+
+                    caption {
+                        caption-side: top;
+                        text-align: center;
+                        font-size: 8px;
+                        color: Black;
+                    }
+
+                    table, td, th{
+                        border:1px solid #000000;  
+                    }
+
+                    th {
+                        height: 20px;
+                        text-align: center;
+                        padding: 5px;
+                        font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                        font-size: 8px;
+                    }
+                </style> -->
+                <div class="row">
+                    <div class="col-xs-3">
+                        <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                    </div>
+                    <div class="col-xs-9 text-right" style="margin-top:20px;" t-field="company.rml_header1"/>
+                </div>
+                <div class="row zero_min_height">
+                    <div class="col-xs-12">
+                        <div style="border-bottom: 1px solid black;"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6" name="company_address">
+                        <span t-field="company.partner_id"
+                            t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
+                            style="border-bottom: 1px solid black; display:inline-block;"/>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12" style="text-align: center; font-size:18px;">EJECUCIÓN DE GASTOS</div>
+                    </div>
+<!--                     <div class="row">
+                        <div class="col-xs-4"> 
+                            <div class="row">
+                                <div class="col-xs-3">RUBRO</div>
+                                <div class="col-xs-8">DESCRIPCION</div>
+                                <div class="col-xs-1">N</div>
+                            </div>
+                        </div>
+                    </div>  -->
+                </div>
+<!--                 <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12" style="text-align: center; font-size:9px; border-top: 1px solid black;"> 
+                            <div class="col-xs-1">Apropiaciones</div>
+                            <div class="col-xs-4">Modificaciones</div>
+                            <div class="col-xs-1">Apropiaciones</div>
+                            <div class="col-xs-1"></div>
+                            <div class="col-xs-1">Apropiaciones</div>
+                            <div class="col-xs-1"></div>
+                            <div class="col-xs-1"></div>
+                            <div class="col-xs-1"></div>
+                        </div>
+                        <div class="col-xs-12" style="text-align: center; font-size:9px; border-bottom: 1px solid black;"> 
+                            <div class="col-xs-1">Iniciales</div>
+                            <div class="col-xs-1">Adiciones</div>
+                            <div class="col-xs-1">Reducciones</div>
+                            <div class="col-xs-1">Creditos</div>
+                            <div class="col-xs-1">Contracreditos</div>
+                            <div class="col-xs-1">Definitivas</div>
+                            <div class="col-xs-1">CDP</div>
+                            <div class="col-xs-1">Disponibles</div>
+                            <div class="col-xs-1">Registros</div>
+                            <div class="col-xs-1">Obligaciones</div>
+                            <div class="col-xs-1">Pagos</div>
+                        </div>
+                    </div>
+                </div> -->
+                <table width="100%" class="table tabla-bordered" style="font-size:9px;">
+<!--                     <caption>Ejecución de Gastos</caption> -->
+                    <tr> 
+                        <th colspan="2" rowspan="2" style="text-align: left; width: 297px; vertical-align: middle;">RUBRO</th>
+                        <th rowspan="2" style="text-align: center; width: 5px; vertical-align: middle;">N</th>
+                        <th style="text-align: center; width: 105px;">APROPIACION</th>
+                        <th colspan="4" style="text-align: center; width: 312px;">MODIFICACIONES</th>
+                        <th style="text-align: center; width: 105px;">APROPIACION</th>
+                        <th rowspan="2" style="text-align: right; width: 78px; vertical-align: middle;">CDP</th>
+                        <th style="text-align: center; width: 105px;">APROPIACION</th>
+                        <th rowspan="2" style="text-align: right; width: 78px; vertical-align: middle;">REGISTRO</th>
+                        <th rowspan="2" style="text-align: right; width: 78px; vertical-align: middle;">OBLIGACION</th>
+                        <th rowspan="2" style="text-align: right; width: 78px; vertical-align: middle;">PAGO</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: center; width: 105px; border:0px;">INICIAL</th> 
+                        <th style="text-align: right; width: 78px; border:0px;">ADI</th>
+                        <th style="text-align: right; width: 78px; border:0px;">RED</th>
+                        <th style="text-align: right; width: 78px; border:0px;">CRE</th>
+                        <th style="text-align: right; width: 78px; border:0px;">CONT</th>
+                        <th style="text-align: center; width: 105px; border:0px;">DEFINITIVA</th>
+                        <th style="text-align: center; width: 105px; border:0px;">DISPONIBLE</th>
+                    </tr> 
+                </table>
+            </div>
+        </template>
+
+        <template id="report_gastos">
+            <t t-call="report.html_container">
+<!--                 <t t-foreach="docs" t-as="o"> -->
+                <t t-call="l10n_co_budget.extended_external_layout">
+                    <div class="page">
+                    <div class="oe_structure"/>
+                        <style>
+                           table
+                            {
+                                table-layout: fixed;
+                            }
+<!--                              caption {
+                                caption-side: top;
+                                text-align: center;
+                                font-size: 8px;
+                                color: Black;
+                            }
+
+                            table, td, th{
+                                border:1px solid #000000;  
+                            }
+
+                            th {
+                                height: 20px;
+                                text-align: center;
+                                padding: 5px;
+                                font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                                font-size: 8px;
+                            }
+                            td{
+                                vertical-align: bottom;
+                                padding: 5px;
+                                text-align: right;
+                                font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                                font-size: 8px;
+                                border-style: hidden;
+                            }    -->  
+                        </style>
+<!--                         <table width="100%" class="table tabla-bordered"> -->
+<!--                                 <t t-foreach="o.data_ids" t-as="data"> -->
+                        <t t-foreach="docs" t-as="data">
+<!--                             <div class="container">
+                                <div class="row">
+                                    <div class="col-xs-4"> 
+                                        <div class="row">
+                                            <div class="col-xs-3"><span t-field="data.rubro_codigo" /></div>
+                                            <div class="col-xs-8"><span t-field="data.rubro_nombre" /></div>
+                                            <div class="col-xs-1"><span t-field="data.rubro_nivel"/></div>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div> -->
+<!--                             <div class="container">
+                                <div class="row">
+                                    <div class="col-xs-10"  style="font-size:9px; text-align: left;">
+                                        <div class="col-xs-1">Nivel:</div>  
+                                        <div class="col-xs-1"><span t-field="data.rubro_nivel"/></div>
+                                        <div class="col-xs-1">Rubro:</div>  
+                                        <div class="col-xs-1"><span t-field="data.rubro_codigo" /></div>
+                                        <div class="col-xs-5"><span t-field="data.rubro_nombre" /></div>
+                                    </div>    
+                                    <div class="col-xs-12" style="font-size:9px; text-align: right;"> 
+                                        <div class="row">
+                                            <div class="col-xs-1" t-esc="'{0:,.2f}'.format(data.rubro_amount)"></div>
+                                            <div class="col-xs-1" t-esc="'{0:,.2f}'.format(data.adiciones)"></div>
+                                            <div class="col-xs-1" t-esc="'{0:,.2f}'.format(data.reducciones)"></div>
+                                            <div class="col-xs-1"><span t-esc="'{0:,.2f}'.format(data.creditos)"/></div>
+                                            <div class="col-xs-1"><span t-esc="'{0:,.2f}'.format(data.contracreditos)"/></div>
+                                            <div class="col-xs-1"><span t-esc="'{0:,.2f}'.format(data.apropiacion_definitiva)"/></div>
+                                            <div class="col-xs-1"><span t-esc="'{0:,.2f}'.format(data.cdp_acumulado)"/></div>
+                                            <div class="col-xs-1"><span t-esc="'{0:,.2f}'.format(data.apropiacion_disponible)"/></div>
+                                            <div class="col-xs-1"><span t-esc="'{0:,.2f}'.format(data.registro_acumulado)"/></div>
+                                            <div class="col-xs-1"><span t-esc="'{0:,.2f}'.format(data.obligacion_acumulado)"/></div>
+                                            <div class="col-xs-1"><span t-esc="'{0:,.2f}'.format(data.pago_acumulado)"/></div>  
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>
+ -->
+                            <table style="font-size:10px;">
+                                <tr>
+                                    <td  style="text-align: left; width: 55px;"><span t-field="data.rubro_codigo" /></td>
+                                    <td  style="text-align: left; width: 242px;"><span t-field="data.rubro_nombre" /></td>
+                                    <td  style="text-align: center; width: 5px;"><span t-field="data.rubro_nivel"/></td>
+                                    <td style="text-align: right; width: 105px;"><span t-esc="'{0:,.2f}'.format(data.rubro_amount)"/></td>
+                                    <td style="text-align: right; width: 78px;"><span t-esc="'{0:,.2f}'.format(data.adiciones)"/></td>
+                                    <td style="text-align: right; width: 78px;"><span t-esc="'{0:,.2f}'.format(data.reducciones)"/></td>
+                                    <td style="text-align: right; width: 78px;"><span t-esc="'{0:,.2f}'.format(data.creditos)"/></td>
+                                    <td style="text-align: right; width: 78px;"><span t-esc="'{0:,.2f}'.format(data.contracreditos)"/></td>
+                                    <td style="text-align: right; width: 105px;"><span t-esc="'{0:,.2f}'.format(data.apropiacion_definitiva)"/></td>
+                                    <td style="text-align: right; width: 78px;"><span t-esc="'{0:,.2f}'.format(data.cdp_acumulado)"/></td>
+                                    <td style="text-align: right; width: 105px;"><span t-esc="'{0:,.2f}'.format(data.apropiacion_disponible)" /></td>
+                                    <td style="text-align: right; width: 78px;"><span t-esc="'{0:,.2f}'.format(data.registro_acumulado)"/></td>
+                                    <td style="text-align: right; width: 78px;"><span t-esc="'{0:,.2f}'.format(data.obligacion_acumulado)"/></td>
+                                    <td style="text-align: right; width: 78px;"><span t-esc="'{0:,.2f}'.format(data.pago_acumulado)"/></td>  
+                                </tr>
+                            </table>
+                        </t>
+<!--                         </table>  -->
+                    </div>
+                </t> 
+<!--                 </t>      -->          
+            </t>
+        </template>
+
+		<report id="action_report_gastos" model="presupuesto.ejecucion.gastos.report" report_type="qweb-pdf" name="l10n_co_budget.report_gastos" string="Ejecucion Gastos" file="report_gastos"/>
+ 
+        <record id="paperformat_gastos" model="report.paperformat">
+            <field name="name">Ejecucion de gastos</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">45</field>
+            <field name="margin_bottom">23</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="True"/>
+            <field name="header_spacing">40</field>
+            <field name="dpi">90</field>
+        </record>
+        
+		<record id="l10n_co_budget.action_report_gastos" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="l10n_co_budget.paperformat_gastos"/>
+        </record> 
+
+<!--         <record id="report_holidays_summary" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="hr_holidays.paperformat_hrsummary"/>
+        </record>
+ -->
+
+	</data>
+</openerp>

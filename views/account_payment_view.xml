@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record id="view_account_payment_presupuesto_form" model="ir.ui.view">
+                <field name="name">view.account.payment.presupuesto</field>
+                <field name="model">account.payment</field>
+                <field name="inherit_id" ref="payment.view_account_payment_form_inherit_payment"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//button[1]" position="attributes">
+                        <attribute name="invisible">[('pago_presupuestal', '=', True)]</attribute>
+                    </xpath>
+                    <field name="payment_transaction_id" position="replace">
+                        <field name="payment_voucher" string="Número Transacción / Número Cheque" attrs="{'required': [('tipo_pago', '=', 'bank')]}"/>
+                        <field name="pago_presupuestal" invisible="1"/>
+                        <field name="tipo_pago" invisible="1"/>
+                    </field>
+                </field>
+        </record>
+
+        <record id="account.menu_action_account_payments_payable" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6,0, [ref('l10n_co_budget.group_budget_record_payments_supplier')])]"/> 
+        </record>
+
+        <record id="account.menu_action_account_payments_receivable" model="ir.ui.menu">
+            <field name="groups_id" eval="[(6,0, [ref('l10n_co_budget.group_budget_record_payments_customer')])]"/> 
+        </record>
+
+    </data>
+</odoo>

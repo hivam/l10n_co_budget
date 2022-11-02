@@ -1,0 +1,942 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    	<template id="report_cdp">
+    		<t t-call="report.html_container">
+    			<t t-foreach="docs" t-as="o">
+    				<t t-call="report.external_layout">
+    					<div class="page">
+    						<div class="oe_structure"/>
+                            <style>
+                                table {
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                }
+
+                                caption {
+                                    caption-side: top;
+                                    text-align: center;
+                                    font-size: 20px;
+                                    color: Black;
+                                }
+
+                                table, td, th{
+                                    border:1px solid #000000;  
+                                }
+
+                                th {
+                                    height: 20px;
+                                    text-align: center;
+                                    padding: 5px;
+                                    font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                                    font-size: 12px;
+                                    border-style: solid;
+                                }
+                                td{
+                                    vertical-align: bottom;
+                                    padding: 5px;
+                                    text-align: left;
+                                    font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                                    font-size: 12px;
+                                    border-style: hidden;
+                                }
+                            </style>
+<!--                             <div class="row">
+                                <div class="col-md-12">RUBROS DEL CDP</div>
+                                <div class="row">
+                                    <div class="col-md-5">RUBRO</div>
+                                    <div class="col-md-1">SALDO</div>
+                                    <div class="col-md-1">VALOR</div>
+                                    <div class="col-md-5">NOTA</div>
+                                </div>
+                                <t t-foreach="o.gastos_ids" t-as="data">
+                                    <div class="row">
+                                        <div class="col-md-5"><span style="text-align: left" t-field="data.rubros_id"/></div>
+                                        <div class="col-md-1"><span style="text-align: right" t-field="data.saldo_move"/></div>
+                                        <div class="col-md-1"><span style="text-align: right" t-field="data.ammount" /></div>
+                                        <div class="col-md-5"><span t-field="data.notas"/></div>
+                                    </div>
+                                </t>
+                            </div> -->
+                            <table class="table tabla-bordered">
+                                <caption>Documento CDP Nro. <span t-field="o.name"/></caption>
+                                <tr>
+                                    <td width="05%">Estado: </td>
+                                    <td width="75%"><span t-field="o.state"/></td> 
+                                    <td width="05%">Fecha: </td>
+                                    <td width="15%"><span t-field="o.date"/></td>   
+                                </tr>
+                                <tr>
+                                    <td>Descripción: </td>
+                                    <td><span t-field="o.description"/></td>   
+                                </tr>
+                            </table>
+    						<table class="table tabla-bordered">
+                                <caption style="font-size: 14px; font-weight: bold;">RUBROS DEL CDP</caption>
+                                <tr> 
+                                    <th width="35%">RUBRO</th>
+                                    <th width="20%">SALDO</th>
+                                    <th width="15%">VALOR</th>
+                                    <th width="30%">NOTAS</th>
+                                </tr>
+                                <t t-foreach="o.gastos_ids" t-as="data">
+                                    <tr>
+                                        <td width="35%" style="text-align: left"><span t-field="data.rubros_id"/></td>
+                                        <td width="20%" style="text-align: right"><span  t-field="data.saldo_move"/></td>
+                                        <td width="15%" style="text-align: right"><span  t-field="data.ammount" /></td>
+                                        <td width="30%"><span t-field="data.notas"/></td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td width="35%"></td>
+                                    <td width="20%" style="text-align: right; font-weight: bold;">Total CDP: </td>
+                                    <td width="15%" style="text-align: right; font-weight: bold;"><span  t-field="o.amount_total" /></td>
+                                    <td width="30%"></td>
+                                </tr>
+                                <tr>
+                                    <td width="35%"></td>
+                                    <td width="20%" style="text-align: right; font-weight: bold;">Total adiciones al CDP: </td>
+                                    <td width="15%" style="text-align: right; ; font-weight: bold;"><span  t-field="o.amount_cdp_adicion" /></td>
+                                    <td width="30%"></td> 
+                                </tr>
+                                <tr>
+                                    <td width="35%"></td>
+                                    <td width="20%" style="text-align: right; font-weight: bold;">Total reducciones al CDP: </td>
+                                    <td width="15%" style="text-align: right; ; font-weight: bold;"><span  t-field="o.amount_cdp_reduccion" /></td>
+                                    <td width="30%"></td> 
+                                </tr>
+                                <tr>
+                                    <td width="35%"></td>
+                                    <td width="20%" style="text-align: right; font-weight: bold;">Total saldo sin utilizar: </td>
+                                    <td width="15%" style="text-align: right; ; font-weight: bold;"><span  t-field="o.amount_available" /></td>
+                                    <td width="30%"></td> 
+                                </tr>
+                            </table>
+                        </div>
+    				</t>
+    			</t>
+    		</t>
+    	</template>
+
+		<report id="action_report_cdp" model="presupuesto.move" report_type="qweb-pdf" name="l10n_co_budget.report_cdp" string="Documento CDP" file="report_cdp"/>
+
+    <template id="report_rp">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <style>
+                                table {
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                }
+
+                                caption {
+                                    caption-side: top;
+                                    text-align: center;
+                                    font-size: 20px;
+                                    color: Black;
+                                }
+
+                                table, td, th{
+                                    border:1px solid #000000;  
+                                }
+
+                                th {
+                                    height: 20px;
+                                    text-align: center;
+                                    padding: 5px;
+                                    font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                                    font-size: 12px;
+                                    border-style: solid;
+                                }
+                                td{
+                                    vertical-align: bottom;
+                                    padding: 5px;
+                                    text-align: left;
+                                    font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                                    font-size: 12px;
+                                    border-style: hidden;
+                                }
+                            </style>
+                            <table class="table tabla-bordered">
+                                <caption>Documento RP Nro. <span t-field="o.name"/></caption>
+                                <tr>
+                                    <td width="05%">Estado: </td>
+                                    <td width="20%"><span t-field="o.state"/></td>
+                                    <td width="05%"></td>
+                                    <td width="50%"></td>  
+                                    <td width="05%">Fecha: </td>
+                                    <td width="20%"><span t-field="o.date"/></td>   
+                                </tr>
+                                <tr>
+                                    <td width="05%">CDP: </td>
+                                    <td width="20%"><span t-field="o.move_rel"/></td>
+                                    <td width="05%">Tercero: </td>
+                                    <td width="50%"><span t-field="o.partner_id"/></td>
+                                    <td width="10%">Contrato: </td>
+                                    <td width="10%"><span t-field="o.contract_id"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Descripción: </td>
+                                    <td><span t-field="o.description"/></td>   
+                                </tr>
+                            </table>
+                            <table class="table tabla-bordered">
+                                <caption style="font-size: 14px; font-weight: bold;">RUBROS DEL RP</caption>
+                                <tr> 
+                                    <th width="40%">RUBRO</th>
+                                    <th width="15%">SALDO</th>
+                                    <th width="15%">VALOR</th>
+                                    <th width="30%">NOTAS</th>
+                                </tr>
+                                <t t-foreach="o.gastos_ids" t-as="data">
+                                    <tr>
+                                        <td width="40%" style="text-align: left"><span t-field="data.rubros_id"/></td>
+                                        <td width="15%" style="text-align: right"><span  t-field="data.saldo_move"/></td>
+                                        <td width="15%" style="text-align: right"><span  t-field="data.ammount" /></td>
+                                        <td width="30%"><span t-field="data.notas"/></td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td width="40%"></td>
+                                    <td width="15%" style="text-align: right; font-weight: bold;">Total RP: </td>
+                                    <td width="15%" style="text-align: right; font-weight: bold;"><span  t-field="o.amount_total" /></td>
+                                    <td width="30%"></td>
+                                </tr>
+                                <tr>
+                                    <td width="40%"></td>
+                                    <td width="15%" style="text-align: right; font-weight: bold;">Total saldo sin utilizar: </td>
+                                    <td width="15%" style="text-align: right; ; font-weight: bold;"><span  t-field="o.amount_available" /></td>
+                                    <td width="30%"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <report id="action_report_rp" model="presupuesto.move" report_type="qweb-pdf" name="l10n_co_budget.report_rp" string="Documento RP" file="report_rp"/>
+
+        <template id="report_mod_cdp">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <style>
+                                table {
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                }
+
+                                caption {
+                                    caption-side: top;
+                                    text-align: center;
+                                    font-size: 20px;
+                                    color: Black;
+                                }
+
+                                table, td, th{
+                                    border:1px solid #000000;  
+                                }
+
+                                th {
+                                    height: 20px;
+                                    text-align: center;
+                                    padding: 5px;
+                                    font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                                    font-size: 12px;
+                                    border-style: solid;
+                                }
+                                td{
+                                    vertical-align: bottom;
+                                    padding: 5px;
+                                    text-align: left;
+                                    font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                                    font-size: 12px;
+                                    border-style: hidden;
+                                }
+                            </style>
+                            <table class="table tabla-bordered">
+                                <caption>Documento Modificación CDP Nro. <span t-field="o.name"/></caption>
+                                <tr>
+                                    <td width="05%">Documento CDP: </td>
+                                    <td width="15%"><span t-field="o.move_rel"/></td>
+                                    <td width="05%">Estado: </td>
+                                    <td width="65%"><span t-field="o.state"/></td> 
+                                    <td width="05%">Fecha: </td>
+                                    <td width="05%"><span t-field="o.date"/></td>
+                                </tr>
+                                <tr>
+
+                                </tr>
+                                <tr>
+                                    <td>Descripción: </td>
+                                    <td><span t-field="o.description"/></td>   
+                                </tr>
+                            </table>
+                            <table class="table tabla-bordered">
+                                <caption style="font-size: 14px; font-weight: bold;">RUBROS DEL DOCUMENTO DE MODIFICACIÓN DE CDP</caption>
+                                <tr> 
+                                    <th width="40%">RUBRO</th>
+                                    <th width="15%">SALDO</th>
+                                    <th width="15%">VALOR</th>
+                                    <th width="30%">NOTAS</th>
+                                </tr>
+                                <t t-foreach="o.gastos_ids" t-as="data">
+                                    <tr>
+                                        <td width="40%" style="text-align: left"><span t-field="data.rubros_id"/></td>
+                                        <td width="15%" style="text-align: right"><span  t-field="data.saldo_move"/></td>
+                                        <td width="15%" style="text-align: right"><span  t-field="data.ammount" /></td>
+                                        <td width="30%"><span t-field="data.notas"/></td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <report id="action_report_mod_cdp" model="presupuesto.move" report_type="qweb-pdf" name="l10n_co_budget.report_mod_cdp" string="Modificación CDP" file="report_mod_cdp"/>
+
+        <template id="report_mod_rp">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <style>
+                                table {
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                }
+
+                                caption {
+                                    caption-side: top;
+                                    text-align: center;
+                                    font-size: 20px;
+                                    color: Black;
+                                }
+
+                                table, td, th{
+                                    border:1px solid #000000;  
+                                }
+
+                                th {
+                                    height: 20px;
+                                    text-align: center;
+                                    padding: 5px;
+                                    font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                                    font-size: 12px;
+                                    border-style: solid;
+                                }
+                                td{
+                                    vertical-align: bottom;
+                                    padding: 5px;
+                                    text-align: left;
+                                    font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                                    font-size: 12px;
+                                    border-style: hidden;
+                                }
+                            </style>
+                            <table class="table tabla-bordered">
+                                <caption>Documento Modificación RP Nro. <span t-field="o.name"/></caption>
+                                <tr>
+                                    <td width="05%">Documento RP: </td>
+                                    <td width="15%"><span t-field="o.move_rel"/></td>
+                                    <td width="05%">Estado: </td>
+                                    <td width="65%"><span t-field="o.state"/></td> 
+                                    <td width="05%">Fecha: </td>
+                                    <td width="05%"><span t-field="o.date"/></td>
+                                </tr>
+                                <tr>
+                                </tr>
+                                <tr>
+                                    <td>Descripción: </td>
+                                    <td><span t-field="o.description"/></td>   
+                                </tr>
+                            </table>
+                            <table class="table tabla-bordered">
+                                <caption style="font-size: 14px; font-weight: bold;">RUBROS DEL DOCUMENTO DE MODIFICACIÓN DE RP</caption>
+                                <tr> 
+                                    <th width="40%">RUBRO</th>
+                                    <th width="15%">SALDO</th>
+                                    <th width="15%">VALOR</th>
+                                    <th width="30%">NOTAS</th>
+                                </tr>
+                                <t t-foreach="o.gastos_ids" t-as="data">
+                                    <tr>
+                                        <td width="40%" style="text-align: left"><span t-field="data.rubros_id"/></td>
+                                        <td width="15%" style="text-align: right"><span  t-field="data.saldo_move"/></td>
+                                        <td width="15%" style="text-align: right"><span  t-field="data.ammount" /></td>
+                                        <td width="30%"><span t-field="data.notas"/></td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <report id="action_report_mod_rp" model="presupuesto.move" report_type="qweb-pdf" name="l10n_co_budget.report_mod_rp" string="Modificación RP" file="report_mod_rp"/>
+
+        <template id="report_orden_pago">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <style>
+                                table {
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                }
+
+                                caption {
+                                    caption-side: top;
+                                    text-align: center;
+                                    font-size: 20px;
+                                    color: Black;
+                                }
+
+                                table, td, th{
+                                    border:1px solid #000000;  
+                                }
+
+                                th {
+                                    height: 20px;
+                                    text-align: center;
+                                    padding: 5px;
+                                    font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                                    font-size: 12px;
+                                    border-style: solid;
+                                }
+                                td{
+                                    vertical-align: bottom;
+                                    padding: 5px;
+                                    text-align: left;
+                                    font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                                    font-size: 12px;
+                                    border-style: hidden;
+                                }
+                            </style>
+                            <table class="table tabla-bordered">
+                                <caption>Documento Orden de Pago Nro. <span t-field="o.name"/></caption>
+                                <tr>
+                                    <td width="05%">Estado: </td>
+                                    <td width="20%"><span t-field="o.state"/></td>
+                                    <td width="05%"></td>
+                                    <td width="50%"></td> 
+                                    <td width="10%">Fecha: </td>
+                                    <td width="10%"><span t-field="o.date"/></td>   
+                                </tr>
+                                <tr>
+                                    <td width="05%">Registro presupuestal: </td>
+                                    <td width="20%"><span t-field="o.move_rel"/></td>
+                                    <td width="05%">Tercero: </td>
+                                    <td width="50%"><span t-field="o.partner_id"/></td>
+                                    <td width="10%">Nomina: </td>
+                                    <td width="10%"><span t-field="o.payslip_id"/></td>
+                                </tr>
+<!--                                 <tr>
+                                    <td width="05%">Factura: </td>
+                                    <td width="20%"><span t-field="o.invoice_id"/></td>
+                                    <td width="05%">Impuestos: </td>
+                                    <td width="50%"><span t-field="o.amount_tax"/></td>
+                                    <td width="10%">Monto:</td>
+                                    <td width="10%"><span t-field="o.amount_invoice"/></td>
+                                </tr>
+                                <tr>
+                                    <td width="05%">Valor total: </td>
+                                    <td width="20%"><span t-field="o.amount_untaxed"/></td>
+                                    <td width="05%">Saldo por pagar: </td>
+                                    <td width="50%"><span t-field="o.amount_residual"/></td>
+                                    <td width="10%"></td>
+                                    <td width="10%"></td>
+                                </tr>    -->                             
+                                <tr>
+                                    <td>Descripción: </td>
+                                    <td><span t-field="o.description"/></td>   
+                                </tr>
+                            </table>
+                            <table class="table tabla-bordered">
+                                <caption style="font-size: 14px; font-weight: bold;">RUBROS DE LA ORDEN DE PAGO</caption>
+                                <tr> 
+                                    <th width="35%">RUBRO</th>
+                                    <th width="20%">SALDO</th>
+                                    <th width="15%">VALOR</th>
+                                    <th width="30%">NOTAS</th>
+                                </tr>
+                                <t t-foreach="o.gastos_ids" t-as="data">
+                                    <tr>
+                                        <td width="35%" style="text-align: left"><span t-field="data.rubros_id"/></td>
+                                        <td width="20%" style="text-align: right"><span  t-field="data.saldo_move"/></td>
+                                        <td width="15%" style="text-align: right"><span  t-field="data.ammount" /></td>
+                                        <td width="30%"><span t-field="data.notas"/></td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td width="35%"></td>
+                                    <td width="20%" style="font-weight: bold; text-align: right;">Factura: </td>
+                                    <td width="15%" style="font-weight: bold; text-align: right;"><span t-field="o.invoice_id"/></td>
+                                    <td width="30%"></td>
+                                </tr> 
+                                <tr>
+                                    <td width="35%"></td>
+                                    <td width="20%" style="text-align: right;">Valor total: </td>
+                                    <td width="15%" style="text-align: right;"><span t-field="o.amount_untaxed"/></td>
+                                    <td width="30%"></td>
+                                </tr>
+                                <tr>   
+                                    <td width="35%"></td>
+                                    <td width="20%" style="text-align: right;">Impuestos: </td>
+                                    <td width="15%" style="text-align: right;"><span t-field="o.amount_tax"/></td>
+                                    <td width="30%"></td>
+                                </tr>
+                                <tr>
+                                    <td width="35%"></td>
+                                    <td width="20%" style="text-align: right;">Monto:</td>
+                                    <td width="15%" style="text-align: right;"><span t-field="o.amount_invoice"/></td>
+                                    <td width="30%"></td>
+                                </tr>
+                                <tr>
+                                    <td width="35%"></td>
+                                    <td width="20%" style="text-align: right;">Saldo por pagar: </td>
+                                    <td width="15%" style="text-align: right;"><span t-field="o.amount_residual"/></td>
+                                    <td width="30%"></td>
+                                </tr>
+                                <tr>
+                                    <td width="35%"></td>
+                                    <td width="20%" style="text-align: right; font-weight: bold;">Total Orden de Pago: </td>
+                                    <td width="15%" style="text-align: right; font-weight: bold;"><span  t-field="o.amount_total" /></td>
+                                    <td width="30%"></td>
+                                </tr>
+                                <tr>
+                                    <td width="35%"></td>
+                                    <td width="20%" style="text-align: right; font-weight: bold;">Total saldo sin utilizar: </td>
+                                    <td width="15%" style="text-align: right; ; font-weight: bold;"><span  t-field="o.amount_available" /></td>
+                                    <td width="30%"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <report id="action_report_orden_pago" model="presupuesto.move" report_type="qweb-pdf" name="l10n_co_budget.report_orden_pago" string="Documento Orden de Pago" file="report_orden_pago"/>
+
+        <template id="report_pago_presupuestal">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <style>
+                                table {
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                }
+
+                                caption {
+                                    caption-side: top;
+                                    text-align: center;
+                                    font-size: 20px;
+                                    color: Black;
+                                }
+
+                                table, td, th{
+                                    border:1px solid #000000;  
+                                }
+
+                                th {
+                                    height: 20px;
+                                    text-align: center;
+                                    padding: 5px;
+                                    font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                                    font-size: 12px;
+                                    border-style: solid;
+                                }
+                                td{
+                                    vertical-align: bottom;
+                                    padding: 5px;
+                                    text-align: left;
+                                    font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                                    font-size: 12px;
+                                    border-style: hidden;
+                                }
+                            </style>
+                            <table class="table tabla-bordered">
+                                <caption>Documento Pago Presupuestal Nro. <span t-field="o.name"/></caption>
+                                <tr>
+                                    <td width="05%">Estado: </td>
+                                    <td width="20%"><span t-field="o.state"/></td>
+                                    <td width="05%"></td>
+                                    <td width="50%"></td> 
+                                    <td width="10%">Fecha: </td>
+                                    <td width="10%"><span t-field="o.date"/></td>   
+                                </tr>
+                                <tr>
+                                    <td width="05%">Orden de pago: </td>
+                                    <td width="20%"><span t-field="o.move_rel"/></td>
+                                    <td width="05%">Tercero: </td>
+                                    <td width="50%"><span t-field="o.partner_id"/></td>
+                                    <td width="10%">Comprobante: </td>
+                                    <td width="10%"><span t-field="o.voucher_id"/></td>
+                                </tr>
+                                <tr>
+                                    <td width="05%"></td>
+                                    <td width="20%"></td>
+                                    <td width="05%"></td>
+                                    <td width="50%"></td>
+                                    <td width="10%">Total impuesto: </td> 
+                                    <td width="10%"><span t-esc="'{0:,.2f}'.format(o.amount_tax_obligacion)"/></td>
+                                </tr>                                    
+                                <tr>
+                                    <td>Descripción: </td>
+                                    <td><span t-field="o.description"/></td>   
+                                </tr>
+                            </table>
+                            <table class="table tabla-bordered">
+                                <caption style="font-size: 14px; font-weight: bold;">RUBROS DEL PAGO PRESUPUESTAL</caption>
+                                <tr> 
+                                    <th width="40%">RUBRO</th>
+                                    <th width="15%">SALDO</th>
+                                    <th width="15%">VALOR</th>
+                                    <th width="30%">NOTAS</th>
+                                </tr>
+                                <t t-foreach="o.gastos_ids" t-as="data">
+                                    <tr>
+                                        <td width="40%" style="text-align: left"><span t-field="data.rubros_id"/></td>
+                                        <td width="15%" style="text-align: right"><span  t-esc="'{0:,.2f}'.format(data.saldo_move)"/></td>
+                                        <td width="15%" style="text-align: right"><span  t-esc="'{0:,.2f}'.format(data.ammount)" /></td>
+                                        <td width="30%"><span t-field="data.notas"/></td>
+                                    </tr>
+                                </t>
+                                <tr>
+                                    <td width="40%"></td>
+                                    <td width="15%" style="text-align: right; font-weight: bold;">Total Pago Presupuestal: </td>
+                                    <td width="15%" style="text-align: right; font-weight: bold;"><span  t-esc="'{0:,.2f}'.format(o.amount_total)" /></td>
+                                    <td width="30%"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <report id="action_report_pago_presupuestal" model="presupuesto.move" report_type="qweb-pdf" name="l10n_co_budget.report_pago_presupuestal" string="Documento de Pago Presupuestal" file="report_pago_presupuestal"/>
+
+        <template id="report_recaudos">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <style>
+                                table {
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                }
+
+                                caption {
+                                    caption-side: top;
+                                    text-align: center;
+                                    font-size: 20px;
+                                    color: Black;
+                                }
+
+                                table, td, th{
+                                    border:1px solid #000000;  
+                                }
+
+                                th {
+                                    height: 20px;
+                                    text-align: center;
+                                    padding: 5px;
+                                    font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                                    font-size: 12px;
+                                    border-style: solid;
+                                }
+                                td{
+                                    vertical-align: bottom;
+                                    padding: 5px;
+                                    text-align: left;
+                                    font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                                    font-size: 12px;
+                                    border-style: hidden;
+                                }
+                            </style>
+                            <table class="table tabla-bordered">
+                                <caption>Documento de Recaudo Nro. <span t-field="o.name"/></caption>
+                                <tr>
+                                    <td width="10%">Estado: </td>
+                                    <td width="70%"><span t-field="o.state"/></td>
+                                    <td width="10%">Fecha: </td>
+                                    <td width="10%"><span t-field="o.date"/></td>   
+                                </tr>
+                                <tr>
+                                    <td width="10%">Tercero: </td>
+                                    <td width="70%"><span t-field="o.partner_id"/></td>
+                                    <td width="10%">Comprobante: </td>
+                                    <td width="10%"><span t-field="o.voucher_id"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Descripción: </td>
+                                    <td><span t-field="o.description"/></td>   
+                                </tr>
+                            </table>
+                            <table class="table tabla-bordered">
+                                <caption style="font-size: 14px; font-weight: bold;">RUBROS DEL RECAUDO</caption>
+                                <tr> 
+                                    <th width="40%">RUBRO</th>
+                                    <th width="15%">SALDO</th>
+                                    <th width="15%">VALOR</th>
+                                    <th width="30%">NOTAS</th>
+                                </tr>
+                                <t t-foreach="o.ingresos_ids" t-as="data">
+                                    <tr>
+                                        <td width="40%" style="text-align: left"><span t-field="data.rubros_id"/></td>
+                                        <td width="15%" style="text-align: right"><span  t-field="data.saldo_move"/></td>
+                                        <td width="15%" style="text-align: right"><span  t-field="data.ammount" /></td>
+                                        <td width="30%"><span t-field="data.notas"/></td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <report id="action_report_recaudos" model="presupuesto.move" report_type="qweb-pdf" name="l10n_co_budget.report_recaudos" string="Documento Recaudos" file="report_recaudos"/>
+<!-- ir_values_id=" " -->
+        <template id="report_modificaciones_ingresos_gastos">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <style>
+                                table {
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                }
+
+                                caption {
+                                    caption-side: top;
+                                    text-align: center;
+                                    font-size: 20px;
+                                    color: Black;
+                                }
+
+                                table, td, th{
+                                    border:1px solid #000000;  
+                                }
+
+                                th {
+                                    height: 20px;
+                                    text-align: center;
+                                    padding: 5px;
+                                    font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                                    font-size: 12px;
+                                    border-style: solid;
+                                }
+                                td{
+                                    vertical-align: bottom;
+                                    padding: 5px;
+                                    text-align: left;
+                                    font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                                    font-size: 12px;
+                                    border-style: hidden;
+                                }
+                            </style>
+                            <table class="table tabla-bordered">
+                                <caption>Documento de Modificación de Ingresos y Gastos Nro. <span t-field="o.name"/></caption>
+                                <tr>
+                                    <td width="05%">Estado: </td>
+                                    <td width="85%"><span t-field="o.state"/></td> 
+                                    <td width="05%">Fecha: </td>
+                                    <td width="05%"><span t-field="o.date"/></td>   
+                                </tr>
+                                <tr>
+                                    <td>Descripción: </td>
+                                    <td><span t-field="o.description"/></td>   
+                                </tr>
+                            </table>
+                            <table class="table tabla-bordered">
+                                <caption style="font-size: 14px; font-weight: bold;">RUBROS DE MODIFICACIÓN DE INGRESOS</caption>
+                                <tr> 
+                                    <th width="40%">RUBRO</th>
+                                    <th width="15%">SALDO</th>
+                                    <th width="15%">VALOR</th>
+                                    <th width="30%">NOTAS</th>
+                                </tr>
+                                <t t-foreach="o.ingresos_ids" t-as="data">
+                                    <tr>
+                                        <td width="40%" style="text-align: left"><span t-field="data.rubros_id"/></td>
+                                        <td width="15%" style="text-align: right"><span  t-field="data.saldo_move"/></td>
+                                        <td width="15%" style="text-align: right"><span  t-field="data.ammount" /></td>
+                                        <td width="30%"><span t-field="data.notas"/></td>
+                                    </tr>
+                                </t>
+                            </table>
+                            <table class="table tabla-bordered">
+                                <caption style="font-size: 14px; font-weight: bold;">RUBROS DE MODIFICACIÓN DE GASTOS</caption>
+                                <tr> 
+                                    <th width="40%">RUBRO</th>
+                                    <th width="15%">SALDO</th>
+                                    <th width="15%">VALOR</th>
+                                    <th width="30%">NOTAS</th>
+                                </tr>
+                                <t t-foreach="o.gastos_ids" t-as="data">
+                                    <tr>
+                                        <td width="40%" style="text-align: left"><span t-field="data.rubros_id"/></td>
+                                        <td width="15%" style="text-align: right"><span  t-field="data.saldo_move"/></td>
+                                        <td width="15%" style="text-align: right"><span  t-field="data.ammount" /></td>
+                                        <td width="30%"><span t-field="data.notas"/></td>
+                                    </tr>
+                                </t>
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <report id="action_modificaciones_ingresos_gastos" model="presupuesto.move" report_type="qweb-pdf" name="l10n_co_budget.report_modificaciones_ingresos_gastos" string="Documento de Modificación de Ingresos y Gastos" file="report_modificaciones_ingresos_gastos"/>
+
+        <template id="report_presupuesto_anual">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="report.external_layout">
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <style>
+                                table {
+                                    width: 100%;
+                                    border-collapse: collapse;
+                                }
+
+                                caption {
+                                    caption-side: top;
+                                    text-align: center;
+                                    font-size: 20px;
+                                    color: Black;
+                                }
+
+                                table, td, th{
+                                    border:1px solid #000000;  
+                                }
+
+                                th {
+                                    height: 20px;
+                                    text-align: center;
+                                    padding: 5px;
+                                    font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                                    font-size: 10px;
+                                    border-style: solid;
+                                }
+                                td{
+                                    vertical-align: bottom;
+                                    padding: 5px;
+                                    text-align: right;
+                                    font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                                    font-size: 10px;
+                                    border-style: hidden;
+                                }
+                            </style>
+                            <table class="table tabla-bordered">
+                                <caption>Documento Presupuesto Anual Nro. <span t-field="o.name"/></caption>
+                                <tr>
+                                    <td width="05%" style="text-align: left">Estado: </td>
+                                    <td width="85%" style="text-align: left"><span t-field="o.state"/></td> 
+                                    <td width="05%" style="text-align: left">Año fiscal: </td>
+                                    <td width="05%" style="text-align: left"><span t-field="o.fiscal_year"/></td>   
+                                </tr>
+                                <tr>
+                                    <td>Descripción: </td>
+                                    <td><span t-field="o.description"/></td>   
+                                </tr>
+                            </table>
+                            <table class="table tabla-bordered">
+                                <caption style="font-size: 14px; font-weight: bold;">I N G R E S O S</caption>
+                                <tr> 
+                                    <th width="20%">Rubro</th>
+                                    <th width="5%">Tipo</th>
+                                    <th width="5%">Valor</th>
+                                    <th width="5%">Enero</th>
+                                    <th width="5%">Febrero</th>
+                                    <th width="5%">Marzo</th>
+                                    <th width="5%">Abril</th>
+                                    <th width="5%">Mayo</th>
+                                    <th width="5%">Junio</th>
+                                    <th width="5%">Julio</th>
+                                    <th width="5%">Agosto</th>
+                                    <th width="5%">Septiembre</th>
+                                    <th width="5%">Octubre</th>
+                                    <th width="5%">Noviembre</th>
+                                    <th width="5%">Diciembre</th>
+                                    <th width="10%">Notas</th>
+                                </tr>
+                                <t t-foreach="o.ingresos_ids" t-as="data">
+                                    <tr>
+                                        <td width="20%" style="text-align: left"><span t-field="data.rubros_id"/></td>
+                                        <td width="5%" style="text-align: left"><span  t-field="data.mov_type"/></td>
+                                        <td width="5%"><span  t-field="data.ammount" /></td>
+                                        <td width="5%"><span t-field="data.enero"/></td>
+                                        <td width="5%"><span t-field="data.febrero"/></td>
+                                        <td width="5%"><span t-field="data.marzo"/></td>
+                                        <td width="5%"><span t-field="data.abril"/></td>
+                                        <td width="5%"><span t-field="data.mayo"/></td>
+                                        <td width="5%"><span t-field="data.junio"/></td>
+                                        <td width="5%"><span t-field="data.julio"/></td>
+                                        <td width="5%"><span t-field="data.agosto"/></td>
+                                        <td width="5%"><span t-field="data.septiembre"/></td>
+                                        <td width="5%"><span t-field="data.octubre"/></td>
+                                        <td width="5%"><span t-field="data.noviembre"/></td>
+                                        <td width="5%"><span t-field="data.diciembre"/></td>
+                                        <td width="10%" style="text-align: left"><span t-field="data.notas"/></td>
+                                    </tr>
+                                </t>
+                            </table>
+                         </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+        <report id="action_presupuesto_anual" model="presupuesto.move" report_type="qweb-pdf" name="l10n_co_budget.report_presupuesto_anual" string="Documento de Presupuesto Anual" file="report_presupuesto_anual"/>
+
+        <record id="l10n_co_budget.action_presupuesto_anual" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="l10n_co_budget.paperformat_ingresos"/>
+        </record>   
+ 
+<!--         <record id="paperformat_ingresos" model="report.paperformat">
+            <field name="name">Ejecucion de ingresos</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">30</field>
+            <field name="margin_bottom">23</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">20</field>
+            <field name="dpi">90</field>
+        </record>
+        
+		<record id="l10n_co_budget.action_report_ingresos" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="l10n_co_budget.paperformat_ingresos"/>
+        </record>  -->
+
+	</data>
+</openerp>

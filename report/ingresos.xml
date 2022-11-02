@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <template id="extended_external_layout_header_ingreso">
+            <div class="header">
+<!--                 <style>
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                    }
+
+                    caption {
+                        caption-side: top;
+                        text-align: center;
+                        font-size: 20px;
+                        color: Black;
+                    }
+
+                    table, td, th{
+                        border:1px solid #000000;  
+                    }
+
+                    th {
+                        height: 20px;
+                        text-align: center;
+                        padding: 5px;
+                        font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                        font-size: 11px;
+                    }
+                    td{
+                        vertical-align: bottom;
+                        padding: 5px;
+                        text-align: right;
+                        font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                        font-size: 11px;
+                        border-style: hidden;
+                    }
+                </style> -->
+                <div class="row">
+                    <div class="col-xs-3">
+                        <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 45px;"/>
+                    </div>
+                    <div class="col-xs-9 text-right" style="margin-top:20px;" t-field="company.rml_header1"/>
+                </div>
+                <div class="row zero_min_height">
+                    <div class="col-xs-12">
+                        <div style="border-bottom: 1px solid black;"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6" name="company_address">
+                        <span t-field="company.partner_id"
+                            t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
+                            style="border-bottom: 1px solid black; display:inline-block;"/>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12" style="text-align: center; font-size:18px;">EJECUCIÓN DE INGRESOS</div>
+                    </div>
+                </div>
+
+                <table width="100%" class="table tabla-bordered" style="font-size:9px;">
+<!--                     <caption>Ejecución de Ingresos</caption> -->
+                    <tr> 
+                        <th colspan="2" rowspan="2" style="text-align: left; width: 300px; vertical-align: middle;">RUBRO</th>
+                        <th rowspan="2" style="text-align: center; width: 5px; vertical-align: middle;">N</th>
+                        <th style="text-align: center; width: 105px;" rowspan="2">APROPIACION INICIAL</th>
+                        <th colspan="4" style="text-align: center; width: 78px;" rowspan="2">ADICIONES</th>
+                        <th style="text-align: center; width: 78px;" rowspan="2" >REDUCCIONES</th>
+                        <th rowspan="2" style="text-align: right; width: 78px; vertical-align: middle;">CREDITOS</th>
+                        <th rowspan="2" style="text-align: center; width: 78px;">CONTRA CREDITOS</th>
+                        <th rowspan="2" style="text-align: right; width: 105px; vertical-align: middle;">APROPIACION DEFINITIVA</th>
+                        <th rowspan="2" style="text-align: right; width: 78px; vertical-align: middle;">EJECUTADO ANTERIOR</th>
+                        <th rowspan="2" style="text-align: right; width: 78px; vertical-align: middle;">EJECUTADO MES</th>
+                        <th rowspan="2" style="text-align: right; width: 105px; vertical-align: middle;">TOTAL EJECUTADO</th>
+                        <th rowspan="2" style="text-align: right; width: 105px; vertical-align: middle;">SALDO POR EJECUTAR</th>
+                        <th rowspan="2" style="text-align: right; width: 51px; vertical-align: middle;">%</th>
+
+<!--                         <th width="30%" colspan="2" rowspan="2">RUBRO</th>
+                        <th width="1%" rowspan="2">N</th>
+                        <th width="12%" rowspan="2">APROPIACION INICIAL</th>
+                        <th width="5%" rowspan="2">ADICIONES</th>
+                        <th width="5%" rowspan="2">REDUCCIONES</th>
+                        <th width="5%" rowspan="2">CREDITOS</th>
+                        <th width="5%" rowspan="2">CONTRA CREDITOS</th>
+                        <th width="9%" rowspan="2">APROPIACION DEFINITIVA</th>
+                        <th width="7%" rowspan="2">EJECUTADO ANTERIOR</th>
+                        <th width="6%" rowspan="2">EJECUTADO MES</th>
+                        <th width="8%" rowspan="2">TOTAL EJECUTADO</th>
+                        <th width="7%" rowspan="2">SALDO POR EJECUTAR</th>
+                        <th width="3%" rowspan="2">%</th> -->
+                    </tr>
+                </table>
+            </div>
+        </template>
+
+        <template id="extended_external_layout_ingreso">
+            <!-- Multicompany -->
+            <t t-if="not o and doc">
+                <t t-set="o" t-value="doc"/>
+            </t>
+            <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+
+            <t t-call="l10n_co_budget.extended_external_layout_header_ingreso" />
+            <t t-raw="0" />
+            <t t-call="report.external_layout_footer" />
+        </template>
+
+    	<template id="report_ingresos">
+    		<t t-call="report.html_container">
+				<t t-call="l10n_co_budget.extended_external_layout_ingreso">
+					<div class="page">
+						<div class="oe_structure"/>
+                        <style>
+                           table
+                            {
+                                table-layout: fixed;
+                            }
+
+<!--                             caption {
+                                caption-side: top;
+                                text-align: center;
+                                font-size: 20px;
+                                color: Black;
+                            }
+
+                            table, td, th{
+                                border:1px solid #000000;  
+                            }
+
+                            th {
+                                height: 20px;
+                                text-align: center;
+                                padding: 5px;
+                                font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                                font-size: 11px;
+                            }
+                            td{
+                                vertical-align: bottom;
+                                padding: 5px;
+                                text-align: right;
+                                font-family: "Arial", Helvetica, Verdana, Arial, sans-serif;
+                                font-size: 11px;
+                                border-style: hidden;
+                            } -->
+                        </style>
+<!--                         <table width="100%" class="table tabla-bordered"> -->
+                        <table style="font-size:9px;">
+                            <t t-foreach="docs" t-as="data">
+                                <tr>
+                                    <td  style="text-align: left; width: 55px;"><span t-field="data.rubro_codigo" /></td>
+                                    <td  style="text-align: left; width: 240px;"><span t-field="data.rubro_nombre" /></td>
+                                    <td  style="text-align: center; width: 5px;"><span t-field="data.rubro_nivel"/></td>
+                                    <td style="text-align: right; width: 105px;"><span t-esc="'{0:,.2f}'.format(data.rubro_amount)"/></td>
+                                    <td style="text-align: right; width: 78px;"><span t-esc="'{0:,.2f}'.format(data.adiciones)"/></td>
+                                    <td style="text-align: right; width: 78px;"><span t-esc="'{0:,.2f}'.format(data.reducciones)"/></td>
+                                    <td style="text-align: right; width: 78px;"><span t-esc="'{0:,.2f}'.format(data.creditos)"/></td>
+                                    <td style="text-align: right; width: 78px;"><span t-esc="'{0:,.2f}'.format(data.contracreditos)"/></td>
+                                    <td style="text-align: right; width: 105px;"><span t-esc="'{0:,.2f}'.format(data.apropiacion_definitiva)"/></td>
+                                    <td style="text-align: right; width: 78px;"><span t-esc="'{0:,.2f}'.format(data.ejecutado_anterior)"/></td>
+                                    <td style="text-align: right; width: 78px;"><span t-esc="'{0:,.2f}'.format(data.ejecutado_mes)" /></td>
+                                    <td style="text-align: right; width: 105px;"><span t-esc="'{0:,.2f}'.format(data.total_ejecutado)"/></td>
+                                    <td style="text-align: right; width: 105px;"><span t-esc="'{0:,.2f}'.format(data.saldo_por_ejecutar)"/></td>
+                                    <td style="text-align: right; width: 51px;"><span t-esc="'{0:,.2f}'.format(data.porcentaje)"/></td> 
+<!--                                     <td width="7%" style="text-align: left"><span t-field="data.rubro_codigo" /></td>
+                                    <td width="18%" style="text-align: left"><span t-field="data.rubro_nombre" /></td>
+                                    <td width="1%" style="text-align: center"><span  t-field="data.rubro_nivel" /></td>
+                                    <td width="12%" ><span t-field="data.rubro_amount" /></td>
+                                    <td width="5%" ><span t-field="data.adiciones"/></td>
+                                    <td width="5%" ><span t-field="data.reducciones"/></td>  
+                                    <td width="5%" ><span t-field="data.creditos"/></td>  
+                                    <td width="5%" ><span t-field="data.contracreditos"/></td>  
+                                    <td width="9%" ><span t-field="data.apropiacion_definitiva"/></td>  
+                                    <td width="7%" ><span t-field="data.ejecutado_anterior"/></td>
+                                    <td width="6%" ><span t-field="data.ejecutado_mes"/></td>
+                                    <td width="8%" ><span t-field="data.total_ejecutado"/></td>
+                                    <td width="7%" ><span t-field="data.saldo_por_ejecutar"/></td>
+                                    <td width="3%" ><span t-field="data.porcentaje"/></td>  -->  
+                                </tr>
+                            </t>                                
+                        </table>
+                    </div>
+				</t>
+    		</t>
+    	</template>
+
+		<report id="action_report_ingresos" model="presupuesto.ejecucion.ingresos.report" report_type="qweb-pdf" name="l10n_co_budget.report_ingresos" string="Ejecucion Ingresos" file="report_ingresos"/>
+ 
+        <record id="paperformat_ingresos" model="report.paperformat">
+            <field name="name">Ejecucion de ingresos</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">297</field>
+            <field name="page_width">210</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">45</field>
+            <field name="margin_bottom">23</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">35</field>
+            <field name="dpi">90</field>
+        </record>
+        
+		<record id="l10n_co_budget.action_report_ingresos" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="l10n_co_budget.paperformat_ingresos"/>
+        </record> 
+
+	</data>
+</openerp>
